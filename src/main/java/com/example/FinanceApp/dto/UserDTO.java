@@ -1,5 +1,6 @@
 package com.example.FinanceApp.dto;
 
+import com.example.FinanceApp.entity.base.User;
 import com.example.FinanceApp.prototype.Prototype;
 
 public class UserDTO implements Prototype {
@@ -35,4 +36,5 @@ public class UserDTO implements Prototype {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

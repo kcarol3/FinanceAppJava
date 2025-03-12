@@ -14,9 +14,18 @@ public class UserService implements UserServiceInterface {
     private final List<User> users = new ArrayList<>();
 
     public UserService() {
-        // Przykładowi użytkownicy
-        users.add(new User("Jan Kowalski", "jan.kowalski@example.com"));
-        users.add(new User("Anna Nowak", "anna.nowak@example.com"));
+        User user1 = User.builder()
+                .setName("Anna Nowak")
+                .setEmail("anna.nowak@example.com")
+                .build();
+
+        User user2 = User.builder()
+                .setName("Piotr Nowak")
+                .setEmail("piotr.nowak@example.com")
+                .build();
+
+        users.add(user1);
+        users.add(user2);
     }
 
     // Pobieranie listy użytkowników i mapowanie na DTO
