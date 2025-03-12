@@ -3,7 +3,7 @@ package com.example.FinanceApp.config;
 public class AccountConfig {
     private static final AccountConfig instance = new AccountConfig();
 
-    private AccountConfig() {};
+    private AccountConfig() {}
 
     public static AccountConfig getInstance() {
         return instance;

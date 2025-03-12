@@ -3,7 +3,7 @@ package com.example.FinanceApp.entity.base;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Można zmienić na JOINED lub TABLE_PER_CLASS
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Account {
 
