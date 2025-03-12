@@ -1,0 +1,38 @@
+package com.example.FinanceApp.dto;
+
+import com.example.FinanceApp.prototype.Prototype;
+
+public class UserDTO implements Prototype {
+    private String name;
+    private String email;
+
+    public UserDTO(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    @Override
+    public Prototype clone() {
+        try {
+            return (UserDTO) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Cloning failed", e);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
