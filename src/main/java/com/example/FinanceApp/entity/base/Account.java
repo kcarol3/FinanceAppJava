@@ -1,10 +1,21 @@
 package com.example.FinanceApp.entity.base;
 
+import com.example.FinanceApp.entity.OwnAccount;
+import com.example.FinanceApp.entity.SavingsAccount;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = SavingsAccount.class, name = "SAVINGS"),
+        @JsonSubTypes.Type(value = OwnAccount.class, name = "OWN")
+})
 public abstract class Account {
 
     @Id
@@ -12,6 +23,12 @@ public abstract class Account {
     private Long id;
 
     private Double balance;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+
+    public void deposit(Double amount) { this.balance += amount; }
+    public void withdraw(Double amount) { this.balance -= amount; }
 
     protected Account() {}
     protected Account(Builder<?> builder) {
