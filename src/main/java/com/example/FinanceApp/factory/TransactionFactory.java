@@ -7,7 +7,6 @@ import com.example.FinanceApp.entity.RecurringTransaction;
 import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.repository.AccountRepository;
-import com.example.FinanceApp.service.AccountService;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import org.springframework.stereotype.Component;
 

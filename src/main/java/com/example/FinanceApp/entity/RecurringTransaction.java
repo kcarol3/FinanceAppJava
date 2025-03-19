@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @DiscriminatorValue("RECURRING")

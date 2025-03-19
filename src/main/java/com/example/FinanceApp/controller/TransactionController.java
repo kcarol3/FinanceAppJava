@@ -1,7 +1,6 @@
 package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.dto.TransactionDTO;
-import com.example.FinanceApp.entity.RecurringTransaction;
 import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.http.ResponseEntity;

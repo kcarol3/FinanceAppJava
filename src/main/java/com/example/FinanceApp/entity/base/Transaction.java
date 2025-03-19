@@ -3,9 +3,7 @@ package com.example.FinanceApp.entity.base;
 import com.example.FinanceApp.config.UUIDGenerator;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

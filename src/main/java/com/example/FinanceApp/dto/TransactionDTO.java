@@ -1,7 +1,6 @@
 package com.example.FinanceApp.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class TransactionDTO {
     private Long id;
