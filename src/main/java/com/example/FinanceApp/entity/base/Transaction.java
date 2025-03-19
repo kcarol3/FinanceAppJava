@@ -41,6 +41,11 @@ public abstract class Transaction implements Cloneable {
 
     public abstract void processTransaction(Account account);
 
+    @Override
+    public String toString() {
+        return name + " | " + description + " | " + amount + " PLN";
+    }
+
     public Account getAccount() {
         return account;
     }
