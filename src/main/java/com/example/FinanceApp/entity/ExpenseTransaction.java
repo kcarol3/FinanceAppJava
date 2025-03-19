@@ -8,8 +8,8 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("EXPENSE")
 public class ExpenseTransaction extends Transaction {
-    public ExpenseTransaction(Double amount, String name, String description, Account account) {
-        super(amount, name, description, account);
+    public ExpenseTransaction(Double amount, String currency, String name, String description, Account account) {
+        super(amount, currency, name, description, account);
     }
 
     public ExpenseTransaction() {

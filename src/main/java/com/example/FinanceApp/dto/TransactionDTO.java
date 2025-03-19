@@ -1,12 +1,15 @@
 package com.example.FinanceApp.dto;
 
-import com.example.FinanceApp.entity.base.Account;
+
+import com.example.FinanceApp.adapter.ExchangeRateService;
+import com.example.FinanceApp.adapter.ToPlnAdapter;
 
 import java.util.Date;
 
 public class TransactionDTO {
     private Long id;
     private Double amount;
+    private String currency;
     private String name;
     private String UUID;
     private String description;
@@ -14,8 +17,9 @@ public class TransactionDTO {
     private Date date;
     private String type;
 
-    public TransactionDTO(Double amount, String name, String UUID, String description, Long accountId, Date date, String type) {
+    public TransactionDTO(Double amount, String currency, String name, String UUID, String description, Long accountId, Date date, String type) {
         this.amount = amount;
+        this.currency = currency;
         this.name = name;
         this.UUID = UUID;
         this.description = description;
@@ -23,6 +27,10 @@ public class TransactionDTO {
         this.date = date;
         this.type = type;
     }
+
+    public String getCurrency() { return currency; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
 
     public String getType() {
         return type;

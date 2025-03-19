@@ -14,6 +14,7 @@ public abstract class Transaction implements Cloneable {
     @GeneratedValue
     private Long id;
     private Double amount;
+    private String currency;
     private String name;
     private String UUID;
     private String description;
@@ -24,8 +25,9 @@ public abstract class Transaction implements Cloneable {
 
     private Date date;
 
-    public Transaction(Double amount, String name, String description, Account account) {
+    public Transaction(Double amount, String currency, String name, String description, Account account) {
         this.amount = amount;
+        this.currency = currency;
         this.name = name;
         this.description = description;
         this.account = account;
@@ -62,6 +64,10 @@ public abstract class Transaction implements Cloneable {
     public Long getId() {
         return id;
     }
+
+    public String getCurrency() { return currency; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
 
     public Double getAmount() {
         return amount;

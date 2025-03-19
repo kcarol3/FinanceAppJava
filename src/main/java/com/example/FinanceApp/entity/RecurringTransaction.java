@@ -13,12 +13,12 @@ import java.util.Date;
 public class RecurringTransaction extends Transaction {
     private LocalDate nextExecutionDate;
     private String frequency; // DAILY, WEEKLY, MONTHLY
-    public RecurringTransaction(Double amount, String name, String description, Account account) {
-        super(amount, name, description, account);
+    public RecurringTransaction(Double amount, String currency, String name, String description, Account account) {
+        super(amount, currency, name, description, account);
     }
 
     public RecurringTransaction(Transaction clone, LocalDate nextExecutionDate, String frequency) {
-        super(clone.getAmount(), clone.getName(), clone.getDescription(), clone.getAccount());
+        super(clone.getAmount(), clone.getCurrency(), clone.getName(), clone.getDescription(), clone.getAccount());
         this.nextExecutionDate = nextExecutionDate;
         this.frequency = frequency;
     }

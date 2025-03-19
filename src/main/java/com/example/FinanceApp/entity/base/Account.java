@@ -23,6 +23,7 @@ public abstract class Account {
     private Long id;
 
     private Double balance;
+    private String currency = "PLN";
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Transaction> transactions;

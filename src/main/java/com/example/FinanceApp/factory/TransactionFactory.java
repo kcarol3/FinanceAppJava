@@ -25,9 +25,9 @@ public class TransactionFactory {
         Account account = repository.findById(transactionDto.getAccount())
                 .orElse(accountService.createAndSaveAccount("OWN"));
         return switch (type.toUpperCase()) {
-            case "EXPENSE" -> new ExpenseTransaction(transactionDto.getAmount(), transactionDto.getName(), transactionDto.getDescription(), account);
-            case "INCOME" -> new IncomeTransaction(transactionDto.getAmount(), transactionDto.getName(), transactionDto.getDescription(), account);
-            case "RECURRING" -> new RecurringTransaction(transactionDto.getAmount(), transactionDto.getName(), transactionDto.getDescription(), account);
+            case "EXPENSE" -> new ExpenseTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account);
+            case "INCOME" -> new IncomeTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account);
+            case "RECURRING" -> new RecurringTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account);
             default -> throw new IllegalArgumentException("Unknown transaction type: " + type);
         };
     }
