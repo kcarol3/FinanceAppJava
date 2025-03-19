@@ -1,9 +1,6 @@
 package com.example.FinanceApp.dto;
 
-
-import com.example.FinanceApp.adapter.ExchangeRateService;
-import com.example.FinanceApp.adapter.ToPlnAdapter;
-
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TransactionDTO {
@@ -14,18 +11,35 @@ public class TransactionDTO {
     private String UUID;
     private String description;
     private Long accountId;
-    private Date date;
+    private String dateString;
+    private LocalDateTime date;
     private String type;
 
-    public TransactionDTO(Double amount, String currency, String name, String UUID, String description, Long accountId, Date date, String type) {
+    public TransactionDTO(Double amount, String currency, String name, String UUID, String description, Long accountId, String date, String type) {
         this.amount = amount;
         this.currency = currency;
         this.name = name;
         this.UUID = UUID;
         this.description = description;
         this.accountId = accountId;
-        this.date = date;
+        this.dateString = date;
         this.type = type;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime dateTime) {
+        this.date = dateTime;
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
     }
 
     public String getCurrency() { return currency; }
@@ -40,13 +54,6 @@ public class TransactionDTO {
         this.type = type;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public Long getId() {
         return id;

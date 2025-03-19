@@ -3,6 +3,8 @@ package com.example.FinanceApp.entity.base;
 import com.example.FinanceApp.config.UUIDGenerator;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,16 +25,16 @@ public abstract class Transaction implements Cloneable {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    private Date date;
+    private LocalDateTime date;
 
-    public Transaction(Double amount, String currency, String name, String description, Account account) {
+    public Transaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date) {
         this.amount = amount;
         this.currency = currency;
         this.name = name;
         this.description = description;
         this.account = account;
         this.UUID = UUIDGenerator.getInstance().generateTransactionId();
-        this.date = new Date();
+        this.date = date;
     }
 
     public Transaction() {
@@ -49,11 +51,11 @@ public abstract class Transaction implements Cloneable {
         this.account = account;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

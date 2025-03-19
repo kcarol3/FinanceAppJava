@@ -7,6 +7,8 @@ import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -18,7 +20,7 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(
-            @RequestBody TransactionDTO requestDto) {
+            @RequestBody TransactionDTO requestDto) throws ParseException {
         Transaction transaction = transactionService.createAndSaveTransaction(requestDto.getType(), requestDto);
         return ResponseEntity.ok(transaction);
     }

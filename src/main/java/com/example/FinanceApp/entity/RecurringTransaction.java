@@ -6,6 +6,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -13,12 +14,12 @@ import java.util.Date;
 public class RecurringTransaction extends Transaction {
     private LocalDate nextExecutionDate;
     private String frequency; // DAILY, WEEKLY, MONTHLY
-    public RecurringTransaction(Double amount, String currency, String name, String description, Account account) {
-        super(amount, currency, name, description, account);
+    public RecurringTransaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date) {
+        super(amount, currency, name, description, account, date);
     }
 
     public RecurringTransaction(Transaction clone, LocalDate nextExecutionDate, String frequency) {
-        super(clone.getAmount(), clone.getCurrency(), clone.getName(), clone.getDescription(), clone.getAccount());
+        super(clone.getAmount(), clone.getCurrency(), clone.getName(), clone.getDescription(), clone.getAccount(), clone.getDate());
         this.nextExecutionDate = nextExecutionDate;
         this.frequency = frequency;
     }
