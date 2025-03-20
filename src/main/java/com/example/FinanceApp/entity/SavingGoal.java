@@ -100,7 +100,15 @@ public class SavingGoal implements SavingGoalInterface {
 
     @Override
     public double getProgressPercentage() {
-        double totalSaved = getTotalSavedAmount();
-        return (totalSaved / targetAmount) * 100;
+        return (this.getTotalSavedAmount() / this.getTotalTargetAmount()) * 100;
+    }
+
+    @Override
+    public double getTotalTargetAmount() {
+        double total = this.targetAmount;
+        for (SavingGoal subGoal : subGoals) {
+            total += subGoal.getTotalTargetAmount();
+        }
+        return total;
     }
 }

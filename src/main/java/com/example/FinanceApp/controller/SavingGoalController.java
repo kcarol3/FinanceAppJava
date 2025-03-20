@@ -2,8 +2,7 @@ package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.dto.SavingGoalDTO;
 import com.example.FinanceApp.dto.SavingGoalResponseDTO;
-import com.example.FinanceApp.entity.SavingGoal;
-import com.example.FinanceApp.service.SavingGoalService;
+import com.example.FinanceApp.service.base.SavingGoalServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.Optional;
 @RequestMapping("/saving-goals")
 public class SavingGoalController {
 
-    private final SavingGoalService savingGoalService;
+    private final SavingGoalServiceInterface savingGoalService;
 
-    public SavingGoalController(SavingGoalService savingGoalService) {
+    public SavingGoalController(SavingGoalServiceInterface savingGoalService) {
         this.savingGoalService = savingGoalService;
     }
 

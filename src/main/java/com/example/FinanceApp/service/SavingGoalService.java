@@ -4,6 +4,7 @@ import com.example.FinanceApp.dto.SavingGoalDTO;
 import com.example.FinanceApp.dto.SavingGoalResponseDTO;
 import com.example.FinanceApp.entity.SavingGoal;
 import com.example.FinanceApp.repository.SavingGoalRepository;
+import com.example.FinanceApp.service.base.SavingGoalServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SavingGoalService {
+public class SavingGoalService implements SavingGoalServiceInterface {
 
     private final SavingGoalRepository repository;
 
