@@ -15,6 +15,7 @@ public class TransactionFactory {
     private AccountRepository repository;
     private AccountServiceInterface accountService;
 
+    //Tydzień 1, Wzorzec Factory 2, tworzenie obiektów kont w zależności od typu
     public TransactionFactory(AccountRepository repository, AccountServiceInterface accountService) {
         this.repository = repository;
         this.accountService = accountService;
@@ -30,4 +31,5 @@ public class TransactionFactory {
             default -> throw new IllegalArgumentException("Unknown transaction type: " + type);
         };
     }
+    //Koniec, Tydzień 1, Wzorzec Factory 2
 }

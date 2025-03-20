@@ -18,11 +18,6 @@ public class User {
         this.email = email;
     }
 
-    private User(UserBuilder builder) {
-        this.name = builder.name;
-        this.email = builder.email;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -47,6 +42,13 @@ public class User {
         this.email = email;
     }
 
+
+    //Tydzień 1, Wzorzec Builder 1, tworzenie użytkowników
+    private User(UserBuilder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+    }
+
     public static class UserBuilder {
         private String name;
         private String email;
@@ -66,8 +68,8 @@ public class User {
         }
     }
 
-    // Metoda ułatwiająca tworzenie nowego buildera
     public static UserBuilder builder() {
         return new UserBuilder();
     }
+    //Koniec, Tydzień 1, Wzorzec Builder 1
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountFactory {
-
+    //Tydzień 1, Wzorzec Factory 1, tworzenie obiektów konta w zależności od typu
     public Account createAccount(String type) {
         return switch (type.toUpperCase()) {
             case "SAVINGS" -> new SavingsAccount.Builder()
@@ -21,4 +21,5 @@ public class AccountFactory {
             default -> throw new IllegalArgumentException("Unknown account type: " + type);
         };
     }
+    //Koniec, Tydzień 1, Wzorzec Factory 1
 }

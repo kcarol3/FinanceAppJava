@@ -102,6 +102,7 @@ public abstract class Transaction implements Cloneable {
         this.description = description;
     }
 
+    //Tydzień 1, Wzorzec Prototype 2, klonowanie transakcji na potrzeby transakcji cyklicznej
     @Override
     public Transaction clone() {
         try {
@@ -112,4 +113,5 @@ public abstract class Transaction implements Cloneable {
             throw new AssertionError();
         }
     }
+    //Koniec, Tydzień 1, Wzorzec Prototype 2
 }

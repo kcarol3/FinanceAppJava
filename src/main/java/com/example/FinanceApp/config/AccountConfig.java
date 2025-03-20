@@ -1,5 +1,7 @@
 package com.example.FinanceApp.config;
 
+
+//Tydzień 1, Wzorzec Singleton 1, tworzenie konfiguracji kont
 public class AccountConfig {
     private static final AccountConfig instance = new AccountConfig();
 
@@ -17,3 +19,4 @@ public class AccountConfig {
         return 4.5;
     }
 }
+//Koniec, Tydzień 1, Wzorzec Singleton 1

@@ -11,6 +11,7 @@ public class UserDTO implements Prototype {
         this.email = email;
     }
 
+    //Tydzień 1, Wzorzec Prototype 1, klonowanie usera na podstawie UserDTO
     @Override
     public Prototype clone() {
         try {
@@ -19,6 +20,7 @@ public class UserDTO implements Prototype {
             throw new RuntimeException("Cloning failed", e);
         }
     }
+    //Koniec, Tydzień 1, Wzorzec Prototype 1
 
     public String getName() {
         return name;

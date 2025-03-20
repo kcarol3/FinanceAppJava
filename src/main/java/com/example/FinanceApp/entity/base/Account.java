@@ -72,6 +72,7 @@ public abstract class Account implements AccountGroupInterface {
     }
 
     protected Account() {}
+    //Tydzień 1, Wzorzec Builder 2, baza do tworzenia kont użytkownika
     protected Account(Builder<?> builder) {
         this.balance = builder.balance;
     }
@@ -88,6 +89,7 @@ public abstract class Account implements AccountGroupInterface {
 
         public abstract Account build();
     }
+    //Koniec, Tydzień 1, Wzorzec Builder 2
 
     public AccountGroup getAccountGroup() {
         return accountGroup;
