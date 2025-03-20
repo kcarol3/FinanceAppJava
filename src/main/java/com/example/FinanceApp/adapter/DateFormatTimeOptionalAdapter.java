@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+// Tydzien 2, Wzorzec adapter 2 - ujednolicenie formatu daty dla stringow date lub datetime, wynikowo zawsze bedzie zapisany obiket LocalDateTime
 @Service
 public class DateFormatTimeOptionalAdapter implements DateConverter {
 
@@ -27,3 +28,5 @@ public class DateFormatTimeOptionalAdapter implements DateConverter {
         return parsedDate;
     }
 }
+
+//Koniec, Tydzien 2, Wzorzec adapter 2

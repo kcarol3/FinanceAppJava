@@ -3,7 +3,7 @@ package com.example.FinanceApp.decorator;
 import com.example.FinanceApp.entity.ExpenseTransaction;
 import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.entity.base.Transaction;
-
+// Tydzien 2, Wzorzec Decorator 1 - implementacja walidatora, ktory spradza czy z konta mozna pobrac konkretna kwote
 public class AccountBalanceValidationDecorator implements TransactionValidator {
 
     private final TransactionValidator wrappedValidator;
@@ -23,4 +23,5 @@ public class AccountBalanceValidationDecorator implements TransactionValidator {
         }
     }
 }
+// Koniec, Tydzien 2, wzorzec Decorator 2
 
