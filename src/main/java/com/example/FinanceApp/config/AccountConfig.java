@@ -10,7 +10,7 @@ public class AccountConfig {
     }
 
     public Double getBalance() {
-        return 0.0;
+        return 100.0;
     }
 
     public Double getInterestRate() {
