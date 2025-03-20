@@ -8,6 +8,6 @@ public class ValidatorConfig {
 
     @Bean
     public TransactionValidator transactionValidator() {
-        return new AmountGreaterThanZeroDecorator(new BasicTransactionValidator());
+        return new AccountBalanceValidationDecorator(new AmountGreaterThanZeroDecorator(new BasicTransactionValidator()));
     }
 }
