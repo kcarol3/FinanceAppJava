@@ -1,0 +1,8 @@
+2025-03-20 00:54:11.064227+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "ACCOUNT_GROUP" nie istnieje
+Table "ACCOUNT_GROUP" not found; SQL statement:
+insert into account_group (name,id) values (?,default) [42102-232]
+2025-03-20 01:05:51.422224+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "[*]ACCOUNT_GROUP_ID"; oczekiwano "ALTER, ANALYZE"
+Syntax error in SQL statement "[*]ACCOUNT_GROUP_ID"; expected "ALTER, ANALYZE"; SQL statement:
+ACCOUNT_GROUP_ID [42001-232]

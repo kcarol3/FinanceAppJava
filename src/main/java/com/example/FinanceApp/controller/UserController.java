@@ -18,13 +18,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Pobieranie wszystkich użytkowników (bez klonowania)
     @GetMapping
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // Pobieranie klonowanego użytkownika na podstawie indeksu
     @GetMapping("/{index}/clone")
     public UserDTO getClonedUser(@PathVariable int index) {
         return userService.getUserClone(index);

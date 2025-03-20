@@ -1,12 +1,13 @@
 package com.example.FinanceApp.entity;
 
+import com.example.FinanceApp.Composite.base.AccountGroupInterface;
 import com.example.FinanceApp.entity.base.Account;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("SAVINGS")
-public class SavingsAccount extends Account {
+public class SavingsAccount extends Account implements AccountGroupInterface {
 
     private double interestRate;
 
@@ -17,6 +18,21 @@ public class SavingsAccount extends Account {
 
     public SavingsAccount() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Savings Account: " + this.balance;
+    }
+
+    @Override
+    public double getFullBalance() {
+        return this.balance;
+    }
+
+    @Override
+    public String showDetails() {
+        return this.toString();
     }
 
     public static class Builder extends Account.Builder<Builder> {

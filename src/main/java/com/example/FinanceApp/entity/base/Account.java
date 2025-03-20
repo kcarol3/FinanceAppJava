@@ -1,5 +1,7 @@
 package com.example.FinanceApp.entity.base;
 
+import com.example.FinanceApp.Composite.base.AccountGroupInterface;
+import com.example.FinanceApp.entity.AccountGroup;
 import com.example.FinanceApp.entity.OwnAccount;
 import com.example.FinanceApp.entity.SavingsAccount;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -16,17 +18,21 @@ import java.util.List;
         @JsonSubTypes.Type(value = SavingsAccount.class, name = "SAVINGS"),
         @JsonSubTypes.Type(value = OwnAccount.class, name = "OWN")
 })
-public abstract class Account {
+public abstract class Account implements AccountGroupInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double balance;
+    protected Double balance;
     private String currency = "PLN";
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Transaction> transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "account_group_id")
+    private AccountGroup accountGroup;
 
     public void deposit(Double amount) { this.balance += amount; }
     public void withdraw(Double amount) { this.balance -= amount; }
@@ -47,5 +53,13 @@ public abstract class Account {
         protected abstract T self();
 
         public abstract Account build();
+    }
+
+    public AccountGroup getAccountGroup() {
+        return accountGroup;
+    }
+
+    public void setAccountGroup(AccountGroup accountGroup) {
+        this.accountGroup = accountGroup;
     }
 }
