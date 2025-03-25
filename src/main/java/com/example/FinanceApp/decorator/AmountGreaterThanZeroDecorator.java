@@ -2,6 +2,7 @@ package com.example.FinanceApp.decorator;
 
 import com.example.FinanceApp.entity.base.Transaction;
 
+// Tydzien 2, Wzorzec Decorator 1 - implementacja walidatora, ktory sprawdza czy transakcje mają kwote wieksza od zera
 public class AmountGreaterThanZeroDecorator implements TransactionValidator {
 
     private final TransactionValidator wrappedValidator;
@@ -18,5 +19,6 @@ public class AmountGreaterThanZeroDecorator implements TransactionValidator {
         }
     }
 }
+// Koniec, Tydzien 2, wzorzec Decorator 1
 
 

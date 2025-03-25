@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Tydzien 2, Wzorzec Composite 2 - przykład z celami finansowymi i grupowania ich w podcele, które też mogą mieć podcele
 @Entity
 public class SavingGoal implements SavingGoalInterface {
 
@@ -112,3 +113,4 @@ public class SavingGoal implements SavingGoalInterface {
         return total;
     }
 }
+// Koniec, Tydzien 2, Wzorzec Composite 2

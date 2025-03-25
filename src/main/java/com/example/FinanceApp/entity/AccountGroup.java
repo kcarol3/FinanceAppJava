@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Tydzien 2, Wzorzec Composite 1 - przykład z grupowaniem kont w strukture drzewiastą implementacja poprzez interfejsu AccountGroupInterface
 @Entity
 public class AccountGroup implements AccountGroupInterface {
     private String name;
@@ -60,4 +61,6 @@ public class AccountGroup implements AccountGroupInterface {
         return id;
     }
 }
+
+// Koniec, Tydzien 2, Wzorzec Composite 1
 
