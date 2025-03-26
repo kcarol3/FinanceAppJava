@@ -19,10 +19,10 @@ import java.time.LocalDateTime;
 @Service
 public class TransactionService implements TransactionServiceInterface {
 
-    private TransactionFactory transactionFactory;
-    private TransactionRepository transactionRepository;
-    private ToPlnAdapter toPlnAdapter;
-    private DateFormatTimeOptionalAdapter dateFormatAdapter;
+    private final TransactionFactory transactionFactory;
+    private final TransactionRepository transactionRepository;
+    private final ToPlnAdapter toPlnAdapter;
+    private final DateFormatTimeOptionalAdapter dateFormatAdapter;
     private final TransactionValidator transactionValidator;
 
     public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator) {

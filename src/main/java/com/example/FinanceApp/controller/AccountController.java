@@ -1,6 +1,7 @@
 package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.entity.base.Account;
+import com.example.FinanceApp.proxy.AccountServiceProxy;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.LoggerFacadeInterface;
 import com.example.FinanceApp.service.log.LoggerFacade;
@@ -11,15 +12,27 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountServiceInterface accountService;
     private final LoggerFacadeInterface logger;
+    private final AccountServiceProxy accountServiceProxy;
 
-    public AccountController(AccountServiceInterface accountService, LoggerFacadeInterface logger) {
+    public AccountController(AccountServiceInterface accountService, LoggerFacadeInterface logger, AccountServiceProxy accountServiceProxy) {
         this.accountService = accountService;
         this.logger = logger;
+        this.accountServiceProxy = accountServiceProxy;
     }
 
     @PostMapping
     public Account createAccount(@RequestParam String type) {
         logger.log("Create account type: " + type + "\n");
         return accountService.createAndSaveAccount(type);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteAccount(@PathVariable Long id) {
+        try {
+            accountServiceProxy.deleteAccount(id, "admin");
+            return "Deleted account with id: " + id + "\n";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }
