@@ -37,5 +37,4 @@ public class UserDTO implements Prototype {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

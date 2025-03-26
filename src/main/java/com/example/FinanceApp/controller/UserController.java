@@ -2,10 +2,8 @@ package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.dto.UserDTO;
 import com.example.FinanceApp.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.FinanceApp.service.base.NewUserFacadeInterface;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,9 +11,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final NewUserFacadeInterface newUserFacade;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, NewUserFacadeInterface newUserFacade) {
         this.userService = userService;
+        this.newUserFacade = newUserFacade;
     }
 
     @GetMapping
@@ -26,5 +26,10 @@ public class UserController {
     @GetMapping("/{index}/clone")
     public UserDTO getClonedUser(@PathVariable int index) {
         return userService.getUserClone(index);
+    }
+
+    @PostMapping("/new")
+    public void saveNewUser(@RequestBody UserDTO userDTO) {
+        newUserFacade.saveNewUser(userDTO);
     }
 }

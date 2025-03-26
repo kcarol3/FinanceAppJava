@@ -1,6 +1,7 @@
 package com.example.FinanceApp.service;
 
 import com.example.FinanceApp.dto.UserDTO;
+import com.example.FinanceApp.repository.UserRepository;
 import com.example.FinanceApp.service.base.UserServiceInterface;
 import org.springframework.stereotype.Service;
 import com.example.FinanceApp.entity.base.User;
@@ -12,8 +13,10 @@ import java.util.List;
 public class UserService implements UserServiceInterface {
 
     private final List<User> users = new ArrayList<>();
+    private final UserRepository userRepository;
 
-    public UserService() {
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
         User user1 = User.builder()
                 .setName("Anna Nowak")
                 .setEmail("anna.nowak@example.com")
@@ -28,7 +31,6 @@ public class UserService implements UserServiceInterface {
         users.add(user2);
     }
 
-    // Pobieranie listy użytkowników i mapowanie na DTO
     public List<UserDTO> getAllUsers() {
         List<UserDTO> userDTOs = new ArrayList<>();
         for (User user : users) {
@@ -37,14 +39,16 @@ public class UserService implements UserServiceInterface {
         return userDTOs;
     }
 
-    // Pobieranie jednego użytkownika i klonowanie DTO
     public UserDTO getUserClone(int index) {
         if (index < 0 || index >= users.size()) {
             return null;
         }
         User user = users.get(index);
         UserDTO originalDTO = new UserDTO(user.getName(), user.getEmail());
-        return (UserDTO) originalDTO.clone(); // Klonowanie DTO
+        return (UserDTO) originalDTO.clone();
     }
 
+    public User save(UserDTO user) {
+        return userRepository.save(new User(user.getName(), user.getEmail()));
+    }
 }

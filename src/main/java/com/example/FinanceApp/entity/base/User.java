@@ -2,6 +2,9 @@ package com.example.FinanceApp.entity.base;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -11,11 +14,26 @@ public class User {
     private String name;
     private String email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Account> accounts = new ArrayList<>();
+
     public User() {}
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
     }
 
     public Integer getId() {
