@@ -1,4 +1,8 @@
 HELP.md
+report.json
+report.txt
+data/finance_db.trace.db
+data/finance_db.mv.db
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
