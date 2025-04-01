@@ -2,6 +2,7 @@ package com.example.FinanceApp.interpreter;
 
 import com.example.FinanceApp.entity.ExpenseTransaction;
 import com.example.FinanceApp.entity.base.Transaction;
+import com.example.FinanceApp.iterator.ExpenseTransactionIterator;
 
 import java.util.List;
 
@@ -15,11 +16,16 @@ public class ExpenseTransactionExpression implements ExpenseExpression {
 
     @Override
     public double interpret(List<Transaction> transactions) {
-        return transactions.stream()
-                .filter(transaction -> transaction instanceof ExpenseTransaction)
-                .filter(transaction -> transaction.getAccount().getId().equals(accountId))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        ExpenseTransactionIterator iterator = new ExpenseTransactionIterator(transactions, accountId);
+
+        double totalExpenses = 0.0;
+
+        while (iterator.hasNext()) {
+            ExpenseTransaction transaction = (ExpenseTransaction) iterator.next();
+            totalExpenses += transaction.getAmount();
+        }
+
+        return totalExpenses;
     }
 }
 //Koniec, Tydzien 4, Wzorzec Interpreter 2
