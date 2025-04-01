@@ -4,6 +4,8 @@ import com.example.FinanceApp.decorator.TransactionValidator;
 import com.example.FinanceApp.dto.TransactionDTO;
 import com.example.FinanceApp.entity.RecurringTransaction;
 import com.example.FinanceApp.entity.base.Transaction;
+import com.example.FinanceApp.interpreter.ExpenseExpression;
+import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
 import com.example.FinanceApp.repository.TransactionRepository;
 import com.example.FinanceApp.service.TransactionService;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
@@ -54,6 +56,14 @@ public class LimitingTransactionServiceProxy implements TransactionServiceInterf
     @Override
     public void validateTransaction(Transaction transaction) throws IllegalArgumentException {
         transactionValidator.validate(transaction);
+    }
+
+    @Override
+    public double calculateTotalExpenses(Long accountId) {
+        List<Transaction> transactions = transactionRepository.findAll();
+        ExpenseExpression expenseExpression = new ExpenseTransactionExpression(accountId);
+
+        return expenseExpression.interpret(transactions);
     }
 
 

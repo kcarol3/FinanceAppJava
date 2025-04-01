@@ -9,12 +9,17 @@ import com.example.FinanceApp.entity.RecurringTransaction;
 import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.factory.TransactionFactory;
+import com.example.FinanceApp.interpreter.BalanceExpression;
+import com.example.FinanceApp.interpreter.ExpenseExpression;
+import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
+import com.example.FinanceApp.interpreter.MinimumBalanceExpression;
 import com.example.FinanceApp.repository.TransactionRepository;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionService implements TransactionServiceInterface {
@@ -44,6 +49,14 @@ public class TransactionService implements TransactionServiceInterface {
 
             Transaction transaction = transactionFactory.createAccount(type, transactionDto);
 
+            if ("EXPENSE".equalsIgnoreCase(type)) {
+                BalanceExpression minBalanceRule = new MinimumBalanceExpression(50.0);
+
+                if (!minBalanceRule.interpret(transaction)) {
+                    throw new TransactionValidationException("Expense transaction failed validation: Insufficient balance.");
+                }
+            }
+
             transactionValidator.validate(transaction);
 
             Account account = transaction.getAccount();
@@ -59,6 +72,14 @@ public class TransactionService implements TransactionServiceInterface {
     @Override
     public void validateTransaction(Transaction transaction) throws IllegalArgumentException {
         transactionValidator.validate(transaction);
+    }
+
+    @Override
+    public double calculateTotalExpenses(Long accountId) {
+        List<Transaction> transactions = transactionRepository.findAll();
+        ExpenseExpression expenseExpression = new ExpenseTransactionExpression(accountId);
+
+        return expenseExpression.interpret(transactions);
     }
 
 

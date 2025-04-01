@@ -3,8 +3,8 @@ package com.example.FinanceApp.controller;
 import com.example.FinanceApp.decorator.TransactionValidationException;
 import com.example.FinanceApp.dto.TransactionDTO;
 import com.example.FinanceApp.entity.base.Transaction;
-import com.example.FinanceApp.proxy.LimitingTransactionServiceProxy;
 import com.example.FinanceApp.flyweight.transactionIcon.TransactionIconFactory;
+import com.example.FinanceApp.proxy.LimitingTransactionServiceProxy;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 
 @RestController
 @RequestMapping("/transactions")
@@ -42,6 +41,13 @@ public class TransactionController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<String> getSumOfExpenses(@PathVariable Long accountId) {
+        double sumOfExpenses = transactionService.calculateTotalExpenses(accountId);
+        return new ResponseEntity<>("Sum of expenses: " + sumOfExpenses, HttpStatus.OK);
+    }
+
 
     @PostMapping("/{transactionId}")
     public Transaction createRecurringTransaction(@PathVariable Long transactionId, @RequestParam String frequency) {

@@ -10,6 +10,6 @@ import java.text.ParseException;
 public interface TransactionServiceInterface {
     Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) throws ParseException;
     void validateTransaction(Transaction transaction) throws IllegalArgumentException;
-
+    double calculateTotalExpenses(Long accountId);
     Transaction createRecurringTransaction(Long transactionId, String frequency);
 }
