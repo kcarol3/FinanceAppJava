@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AccountServiceInterface {
     Account createAndSaveAccount(String type);
+    void transferMoney(Long fromId, Long toId, Double amount);
 }

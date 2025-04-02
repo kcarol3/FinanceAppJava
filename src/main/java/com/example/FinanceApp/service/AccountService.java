@@ -23,4 +23,23 @@ public class AccountService implements AccountServiceInterface {
 
         return accountRepository.save(account);
     }
+
+    @Override
+    @Transactional
+    public void transferMoney(Long fromId, Long toId, Double amount) {
+        Account fromAccount = accountRepository.findById(fromId)
+                .orElseThrow(() -> new RuntimeException("Konto źródłowe nie znalezione"));
+        Account toAccount = accountRepository.findById(toId)
+                .orElseThrow(() -> new RuntimeException("Konto docelowe nie znalezione"));
+
+        if (fromAccount.getBalance().compareTo(amount) < 0) {
+            throw new RuntimeException("Niewystarczające środki");
+        }
+
+        fromAccount.withdraw(amount);
+        toAccount.deposit(amount);
+
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
+    }
 }
