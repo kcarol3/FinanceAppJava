@@ -39,3 +39,5 @@ data/
 .DS_Store
 
 logs/
+
+/data/finance_db.mv.db
