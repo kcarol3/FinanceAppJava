@@ -4,6 +4,7 @@ import com.example.FinanceApp.Composite.base.AccountGroupInterface;
 import com.example.FinanceApp.entity.AccountGroup;
 import com.example.FinanceApp.entity.OwnAccount;
 import com.example.FinanceApp.entity.SavingsAccount;
+import com.example.FinanceApp.memento.AccountMemento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -36,17 +37,12 @@ public abstract class Account implements AccountGroupInterface {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @ManyToOne
     @JoinColumn(name = "account_group_id")
     private AccountGroup accountGroup;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountMemento> mementos;
 
     public void deposit(Double amount) { this.balance += amount; }
     public void withdraw(Double amount) { this.balance -= amount; }
@@ -79,9 +75,31 @@ public abstract class Account implements AccountGroupInterface {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public AccountGroup getAccountGroup() {
+        return accountGroup;
+    }
+
+    public void setAccountGroup(AccountGroup accountGroup) {
+        this.accountGroup = accountGroup;
+    }
+
+    public List<AccountMemento> getMementos() { return mementos; }
+
+    public void addMementos(AccountMemento memento) { mementos.add(memento); }
+
+    public void restoreFromMemento(AccountMemento memento) { this.balance = memento.getBalance(); }
 
     protected Account() {}
     //Tydzień 1, Wzorzec Builder 2, baza do tworzenia kont użytkownika
@@ -102,12 +120,4 @@ public abstract class Account implements AccountGroupInterface {
         public abstract Account build();
     }
     //Koniec, Tydzień 1, Wzorzec Builder 2
-
-    public AccountGroup getAccountGroup() {
-        return accountGroup;
-    }
-
-    public void setAccountGroup(AccountGroup accountGroup) {
-        this.accountGroup = accountGroup;
-    }
 }

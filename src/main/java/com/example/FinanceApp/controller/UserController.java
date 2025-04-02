@@ -3,6 +3,8 @@ package com.example.FinanceApp.controller;
 import com.example.FinanceApp.dto.UserDTO;
 import com.example.FinanceApp.service.UserService;
 import com.example.FinanceApp.service.base.NewUserFacadeInterface;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +26,28 @@ public class UserController {
     }
 
     @GetMapping("/{index}/clone")
-    public UserDTO getClonedUser(@PathVariable int index) {
+    public UserDTO getClonedUser(@PathVariable Long index) {
         return userService.getUserClone(index);
     }
 
     @PostMapping("/new")
     public void saveNewUser(@RequestBody UserDTO userDTO) {
         newUserFacade.saveNewUser(userDTO);
+    }
+
+    @PutMapping("/edit/{userId}")
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        userService.editUser(userId, userDTO);
+        return new ResponseEntity<>("User has been updated", HttpStatus.OK);
+    }
+
+    @PostMapping("/restore/{userId}")
+    public String restoreAccountState(@PathVariable Long userId) {
+        try {
+            userService.restoreUserState(userId, userService.findFirstByUserIdOrderByIdDesc(userId).getId());
+            return "User state with ID " + userId + " has been restored to the previous state.";
+        } catch (Exception e) {
+            return "Error restoring user state: " + e.getMessage();
+        }
     }
 }

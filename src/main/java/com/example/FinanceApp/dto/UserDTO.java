@@ -3,6 +3,7 @@ package com.example.FinanceApp.dto;
 import com.example.FinanceApp.prototype.Prototype;
 
 public class UserDTO implements Prototype {
+    private Long id;
     private String name;
     private String email;
 
@@ -21,6 +22,11 @@ public class UserDTO implements Prototype {
         }
     }
     //Koniec, Tydzień 1, Wzorzec Prototype 1
+
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getName() {
         return name;
