@@ -10,6 +10,8 @@ import com.example.FinanceApp.repository.AccountRepository;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class TransactionFactory {
     private AccountRepository repository;
@@ -22,14 +24,21 @@ public class TransactionFactory {
     }
 
     public Transaction createAccount(String type, TransactionDTO transactionDto) {
-        Account account = repository.findById(transactionDto.getAccount())
-                .orElse(accountService.createAndSaveAccount("OWN"));
-        return switch (type.toUpperCase()) {
-            case "EXPENSE" -> new ExpenseTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
-            case "INCOME" -> new IncomeTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
-            case "RECURRING" -> new RecurringTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
-            default -> throw new IllegalArgumentException("Unknown transaction type: " + type);
-        };
+        Optional<Account> accountOptional = repository.findById(transactionDto.getAccount());
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            return switch (type.toUpperCase()) {
+                case "EXPENSE" ->
+                        new ExpenseTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
+                case "INCOME" ->
+                        new IncomeTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
+                case "RECURRING" ->
+                        new RecurringTransaction(transactionDto.getAmount(), transactionDto.getCurrency(), transactionDto.getName(), transactionDto.getDescription(), account, transactionDto.getDate());
+                default -> throw new IllegalArgumentException("Unknown transaction type: " + type);
+            };
+        } else {
+            throw new IllegalArgumentException("Account not found");
+        }
     }
     //Koniec, Tydzień 1, Wzorzec Factory 2
 }

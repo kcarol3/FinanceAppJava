@@ -1,5 +1,7 @@
 package com.example.FinanceApp.entity.base;
 
+import com.example.FinanceApp.memento.AccountMemento;
+import com.example.FinanceApp.memento.UserMemento;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,12 +12,15 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Account> accounts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserMemento> mementos;
 
     public User() {}
 
@@ -24,23 +29,11 @@ public class User {
         this.email = email;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public void addAccount(Account account) {
-        accounts.add(account);
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,6 +52,18 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Account> getAccounts() { return accounts; }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public List<UserMemento> getMementos() { return mementos;}
+
+    public void addMementos(UserMemento memento) { mementos.add(memento); }
+    public void restoreFromMemento(UserMemento memento) { this.name = memento.getName(); this.email = memento.getEmail(); }
+
 
 
     //Tydzień 1, Wzorzec Builder 1, tworzenie użytkowników

@@ -14,6 +14,7 @@ import com.example.FinanceApp.interpreter.ExpenseExpression;
 import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
 import com.example.FinanceApp.interpreter.MinimumBalanceExpression;
 import com.example.FinanceApp.repository.TransactionRepository;
+import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +30,15 @@ public class TransactionService implements TransactionServiceInterface {
     private final ToPlnAdapter toPlnAdapter;
     private final DateFormatTimeOptionalAdapter dateFormatAdapter;
     private final TransactionValidator transactionValidator;
+    private final AccountServiceInterface accountService;
 
-    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator) {
+    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService) {
         this.transactionFactory = transactionFactory;
         this.transactionRepository = transactionRepository;
         this.toPlnAdapter = toPlnAdapter;
         this.dateFormatAdapter = dateFormatAdapter;
         this.transactionValidator = transactionValidator;
+        this.accountService = accountService;
     }
 
     @Override
@@ -60,8 +63,9 @@ public class TransactionService implements TransactionServiceInterface {
             transactionValidator.validate(transaction);
 
             Account account = transaction.getAccount();
-            transaction.processTransaction(account);
+            accountService.createAndSaveAccountMemento(account);
 
+            transaction.processTransaction(account);
 
             return transactionRepository.save(transaction);
         } catch (IllegalArgumentException e) {

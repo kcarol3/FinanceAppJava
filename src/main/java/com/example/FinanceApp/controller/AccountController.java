@@ -4,7 +4,6 @@ import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.proxy.AccountServiceProxy;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.LoggerFacadeInterface;
-import com.example.FinanceApp.service.log.LoggerFacade;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +32,16 @@ public class AccountController {
             return "Deleted account with id: " + id + "\n";
         } catch (Exception e) {
             return e.getMessage();
+        }
+    }
+
+    @PostMapping("/restore/{accountId}")
+    public String restoreAccountState(@PathVariable Long accountId) {
+        try {
+            accountService.restoreAccountState(accountId, accountService.findFirstByAccountIdOrderByIdDesc(accountId).getId());
+            return "Account state with ID " + accountId + " has been restored to the previous state.";
+        } catch (Exception e) {
+            return "Error restoring account state: " + e.getMessage();
         }
     }
 }
