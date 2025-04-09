@@ -6,6 +6,7 @@ import com.example.FinanceApp.memento.UserMemento;
 import com.example.FinanceApp.state.UserStateType;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserStateType state;
+
+    private BigDecimal totalInvestment;
+    private BigDecimal riskFactor;
 
     public User() {}
 
@@ -110,4 +114,21 @@ public class User {
         return new UserBuilder();
     }
     //Koniec, Tydzień 1, Wzorzec Builder 1
+
+
+    public BigDecimal getTotalInvestment() {
+        return totalInvestment;
+    }
+
+    public void setTotalInvestment(BigDecimal totalInvestment) {
+        this.totalInvestment = totalInvestment;
+    }
+
+    public BigDecimal getRiskFactor() {
+        return riskFactor;
+    }
+
+    public void setRiskFactor(BigDecimal riskFactor) {
+        this.riskFactor = riskFactor;
+    }
 }
