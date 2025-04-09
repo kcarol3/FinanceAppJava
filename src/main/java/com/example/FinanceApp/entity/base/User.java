@@ -1,5 +1,6 @@
 package com.example.FinanceApp.entity.base;
 
+import com.example.FinanceApp.entity.Alert;
 import com.example.FinanceApp.memento.AccountMemento;
 import com.example.FinanceApp.memento.UserMemento;
 import com.example.FinanceApp.state.UserStateType;

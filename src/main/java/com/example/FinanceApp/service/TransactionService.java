@@ -13,9 +13,11 @@ import com.example.FinanceApp.interpreter.BalanceExpression;
 import com.example.FinanceApp.interpreter.ExpenseExpression;
 import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
 import com.example.FinanceApp.interpreter.MinimumBalanceExpression;
+import com.example.FinanceApp.observer.TransactionAddedEvent;
 import com.example.FinanceApp.repository.TransactionRepository;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
+import org.springframework.context.ApplicationEventPublisher;
 import com.example.FinanceApp.state.TransactionContext;
 import com.example.FinanceApp.state.TransactionStateType;
 import org.springframework.stereotype.Service;
@@ -34,13 +36,16 @@ public class TransactionService implements TransactionServiceInterface {
     private final TransactionValidator transactionValidator;
     private final AccountServiceInterface accountService;
 
-    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService) {
+    private final ApplicationEventPublisher publisher;
+
+    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService, ApplicationEventPublisher publisher) {
         this.transactionFactory = transactionFactory;
         this.transactionRepository = transactionRepository;
         this.toPlnAdapter = toPlnAdapter;
         this.dateFormatAdapter = dateFormatAdapter;
         this.transactionValidator = transactionValidator;
         this.accountService = accountService;
+        this.publisher = publisher;
     }
 
     @Override
@@ -72,9 +77,11 @@ public class TransactionService implements TransactionServiceInterface {
 
             TransactionContext context = new TransactionContext(transaction);
             context.process(); // -> COMPLETED
+            publisher.publishEvent(new TransactionAddedEvent(this, transaction));
 
             return transactionRepository.save(context.getTransaction());
-
+        } catch (IllegalArgumentException e) {
+            throw new TransactionValidationException("Transaction validation failed: " + e.getMessage(), e);
         } catch (Exception e) {
             if (transaction != null) {
                 TransactionContext context = new TransactionContext(transaction);
@@ -85,40 +92,6 @@ public class TransactionService implements TransactionServiceInterface {
             throw new TransactionValidationException("Transaction failed: " + e.getMessage(), e);
         }
     }
-
-
-//    @Override
-//    public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) {
-//        try {
-//            Double convertedAmount = toPlnAdapter.convert(transactionDto.getAmount(), transactionDto.getCurrency());
-//            LocalDateTime convertedDate = dateFormatAdapter.convertDate(transactionDto.getDateString());
-//
-//            transactionDto.setAmount(convertedAmount);
-//            transactionDto.setDate(convertedDate);
-//
-//            Transaction transaction = transactionFactory.createAccount(type, transactionDto);
-//
-//            if ("EXPENSE".equalsIgnoreCase(type)) {
-//                BalanceExpression minBalanceRule = new MinimumBalanceExpression(50.0);
-//
-//                if (!minBalanceRule.interpret(transaction)) {
-//                    ;
-//                    throw new TransactionValidationException("Expense transaction failed validation: Insufficient balance.");
-//                }
-//            }
-//
-//            transactionValidator.validate(transaction);
-//
-//            Account account = transaction.getAccount();
-//            accountService.createAndSaveAccountMemento(account);
-//
-//            transaction.processTransaction(account);
-//
-//            return transactionRepository.save(transaction);
-//        } catch (IllegalArgumentException e) {
-//            throw new TransactionValidationException("Transaction validation failed: " + e.getMessage(), e);
-//        }
-//    }
 
     @Override
     public void validateTransaction(Transaction transaction) throws IllegalArgumentException {
