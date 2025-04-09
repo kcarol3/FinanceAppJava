@@ -17,6 +17,7 @@ import com.example.FinanceApp.observer.TransactionAddedEvent;
 import com.example.FinanceApp.repository.TransactionRepository;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
+import com.example.FinanceApp.strategy.taxStrategy.TaxService;
 import org.springframework.context.ApplicationEventPublisher;
 import com.example.FinanceApp.state.TransactionContext;
 import com.example.FinanceApp.state.TransactionStateType;
@@ -37,8 +38,9 @@ public class TransactionService implements TransactionServiceInterface {
     private final AccountServiceInterface accountService;
 
     private final ApplicationEventPublisher publisher;
+    private final TaxService taxService;
 
-    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService, ApplicationEventPublisher publisher) {
+    public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService, ApplicationEventPublisher publisher, TaxService taxService) {
         this.transactionFactory = transactionFactory;
         this.transactionRepository = transactionRepository;
         this.toPlnAdapter = toPlnAdapter;
@@ -46,6 +48,7 @@ public class TransactionService implements TransactionServiceInterface {
         this.transactionValidator = transactionValidator;
         this.accountService = accountService;
         this.publisher = publisher;
+        this.taxService = taxService;
     }
 
     @Override
@@ -70,6 +73,11 @@ public class TransactionService implements TransactionServiceInterface {
                 }
             }
 
+            if ("INCOME".equalsIgnoreCase(type)) {
+                Double newIncome = transaction.getAmount() - taxService.calculateTax(transaction.getAmount(), transaction.getCurrency());
+                transaction.setAmount(newIncome);
+            }
+
             transactionValidator.validate(transaction);
 
             Account account = transaction.getAccount();
@@ -77,6 +85,9 @@ public class TransactionService implements TransactionServiceInterface {
 
             TransactionContext context = new TransactionContext(transaction);
             context.process(); // -> COMPLETED
+
+            transaction.processTransaction(account);
+
             publisher.publishEvent(new TransactionAddedEvent(this, transaction));
 
             return transactionRepository.save(context.getTransaction());
