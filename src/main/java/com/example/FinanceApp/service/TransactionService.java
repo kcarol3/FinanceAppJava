@@ -76,7 +76,7 @@ public class TransactionService implements TransactionServiceInterface {
             accountService.createAndSaveAccountMemento(account);
 
             TransactionContext context = new TransactionContext(transaction);
-            context.process(); // -> COMPLETED
+            context.process();
             publisher.publishEvent(new TransactionAddedEvent(this, transaction));
 
             return transactionRepository.save(context.getTransaction());
