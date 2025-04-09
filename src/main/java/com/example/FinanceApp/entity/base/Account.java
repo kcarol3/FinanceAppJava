@@ -2,6 +2,7 @@ package com.example.FinanceApp.entity.base;
 
 import com.example.FinanceApp.Composite.base.AccountGroupInterface;
 import com.example.FinanceApp.entity.AccountGroup;
+import com.example.FinanceApp.entity.Alert;
 import com.example.FinanceApp.entity.OwnAccount;
 import com.example.FinanceApp.entity.SavingsAccount;
 import com.example.FinanceApp.memento.AccountMemento;
@@ -28,6 +29,9 @@ public abstract class Account implements AccountGroupInterface {
 
     protected Double balance;
     private String currency = "PLN";
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Alert> alerts;
 
     @JsonBackReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
