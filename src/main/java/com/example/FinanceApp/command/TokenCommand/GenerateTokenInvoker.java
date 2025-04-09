@@ -1,4 +1,4 @@
-package com.example.FinanceApp.Command.TokenCommand;
+package com.example.FinanceApp.command.TokenCommand;
 
 public class GenerateTokenInvoker {
     public TokenCommandInterface tokenCommandInterface;

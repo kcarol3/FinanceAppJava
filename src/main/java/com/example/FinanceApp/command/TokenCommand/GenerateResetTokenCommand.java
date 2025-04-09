@@ -1,4 +1,4 @@
-package com.example.FinanceApp.Command.TokenCommand;
+package com.example.FinanceApp.command.TokenCommand;
 
 import java.security.SecureRandom;
 import java.util.Base64;

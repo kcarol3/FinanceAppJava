@@ -1,6 +1,7 @@
 package com.example.FinanceApp.entity.base;
 
 import com.example.FinanceApp.config.UUIDGenerator;
+import com.example.FinanceApp.state.TransactionStateType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,20 @@ public abstract class Transaction implements Cloneable {
     private Account account;
 
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStateType state;
+
+    public Transaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date, TransactionStateType state) {
+        this.amount = amount;
+        this.currency = currency;
+        this.name = name;
+        this.description = description;
+        this.account = account;
+        this.UUID = UUIDGenerator.getInstance().generateTransactionId();
+        this.date = date;
+        this.state = TransactionStateType.PLANNED;
+    }
 
     public Transaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date) {
         this.amount = amount;
@@ -101,6 +116,10 @@ public abstract class Transaction implements Cloneable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public TransactionStateType getState() { return state; }
+
+    public void setState(TransactionStateType state) { this.state = state; }
 
     //Tydzień 1, Wzorzec Prototype 2, klonowanie transakcji na potrzeby transakcji cyklicznej
     @Override

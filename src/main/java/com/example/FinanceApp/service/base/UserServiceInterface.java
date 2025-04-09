@@ -11,7 +11,10 @@ public interface UserServiceInterface {
     UserDTO getUserClone(Long id);
     User save(UserDTO user);
     void editUser(Long userId, UserDTO updatedUser);
-    UserMemento createAndSaveUserMemento(User user);
+    void createAndSaveUserMemento(User user);
     void restoreUserState(Long userId, Long mementoId);
     UserMemento findFirstByUserIdOrderByIdDesc(Long userId);
+    public void activateUser(Long userId);
+    public void suspendUser(Long userId);
+    public void closeUser(Long userId);
 }

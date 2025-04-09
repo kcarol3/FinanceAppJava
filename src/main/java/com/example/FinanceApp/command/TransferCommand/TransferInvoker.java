@@ -1,4 +1,4 @@
-package com.example.FinanceApp.Command.TransferCommand;
+package com.example.FinanceApp.command.TransferCommand;
 
 public class TransferInvoker {
     public TransferCommandInterface transferCommandInterface;

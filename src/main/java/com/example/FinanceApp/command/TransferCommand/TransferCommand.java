@@ -1,4 +1,4 @@
-package com.example.FinanceApp.Command.TransferCommand;
+package com.example.FinanceApp.command.TransferCommand;
 
 import com.example.FinanceApp.dto.TransferDTO;
 import com.example.FinanceApp.service.base.AccountServiceInterface;

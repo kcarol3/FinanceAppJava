@@ -1,15 +1,18 @@
 package com.example.FinanceApp.dto;
 
 import com.example.FinanceApp.prototype.Prototype;
+import com.example.FinanceApp.state.UserStateType;
 
 public class UserDTO implements Prototype {
     private Long id;
     private String name;
     private String email;
+    private UserStateType state;
 
-    public UserDTO(String name, String email) {
+    public UserDTO(String name, String email, UserStateType state) {
         this.name = name;
         this.email = email;
+        this.state = UserStateType.ACTIVE;
     }
 
     //Tydzień 1, Wzorzec Prototype 1, klonowanie usera na podstawie UserDTO
@@ -42,5 +45,13 @@ public class UserDTO implements Prototype {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserStateType getState() {
+        return state;
+    }
+
+    public void setState(UserStateType state) {
+        this.state = state;
     }
 }

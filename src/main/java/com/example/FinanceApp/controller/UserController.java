@@ -50,4 +50,22 @@ public class UserController {
             return "Error restoring user state: " + e.getMessage();
         }
     }
+
+    @PostMapping("/{id}/suspend")
+    public ResponseEntity<Void> suspendUser(@PathVariable Long id) {
+        userService.suspendUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/activate")
+    public ResponseEntity<Void> activateUser(@PathVariable Long id) {
+        userService.activateUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/close")
+    public ResponseEntity<Void> closeUser(@PathVariable Long id) {
+        userService.closeUser(id);
+        return ResponseEntity.ok().build();
+    }
 }

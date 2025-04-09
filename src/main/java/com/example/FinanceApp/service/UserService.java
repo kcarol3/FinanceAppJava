@@ -5,6 +5,8 @@ import com.example.FinanceApp.memento.UserMemento;
 import com.example.FinanceApp.repository.UserMementoRepository;
 import com.example.FinanceApp.repository.UserRepository;
 import com.example.FinanceApp.service.base.UserServiceInterface;
+import com.example.FinanceApp.state.UserContext;
+import com.example.FinanceApp.state.UserStateType;
 import org.springframework.stereotype.Service;
 import com.example.FinanceApp.entity.base.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +28,13 @@ public class UserService implements UserServiceInterface {
         User user1 = User.builder()
                 .setName("Anna Nowak")
                 .setEmail("anna.nowak@example.com")
+                .setState(UserStateType.ACTIVE)
                 .build();
 
         User user2 = User.builder()
                 .setName("Piotr Nowak")
                 .setEmail("piotr.nowak@example.com")
+                .setState(UserStateType.ACTIVE)
                 .build();
 
         users.add(user1);
@@ -40,7 +44,7 @@ public class UserService implements UserServiceInterface {
     public List<UserDTO> getAllUsers() {
         List<UserDTO> userDTOs = new ArrayList<>();
         for (User user : users) {
-            userDTOs.add(new UserDTO(user.getName(), user.getEmail()));
+            userDTOs.add(new UserDTO(user.getName(), user.getEmail(), user.getState()));
         }
         return userDTOs;
     }
@@ -50,12 +54,12 @@ public class UserService implements UserServiceInterface {
             return null;
         }
         User user = users.get(Math.toIntExact(index));
-        UserDTO originalDTO = new UserDTO(user.getName(), user.getEmail());
+        UserDTO originalDTO = new UserDTO(user.getName(), user.getEmail(), user.getState());
         return (UserDTO) originalDTO.clone();
     }
 
     public User save(UserDTO user) {
-        return userRepository.save(new User(user.getName(), user.getEmail()));
+        return userRepository.save(new User(user.getName(), user.getEmail(), user.getState()));
     }
 
     @Override
@@ -72,14 +76,14 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public UserMemento createAndSaveUserMemento(User user) {
+    public void createAndSaveUserMemento(User user) {
         UserMemento memento = new UserMemento();
         memento.setName(user.getName());
         memento.setEmail(user.getEmail());
         memento.setUser(user);
 
         user.addMementos(memento);
-        return userMementoRepository.save(memento);
+        userMementoRepository.save(memento);
     }
 
     @Override
@@ -99,5 +103,30 @@ public class UserService implements UserServiceInterface {
     public UserMemento findFirstByUserIdOrderByIdDesc(Long userId) {
         return userMementoRepository.findTopByUserIdOrderByIdDesc(userId);
     }
+
+    @Override
+    public void suspendUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        UserContext context = new UserContext(user);
+        context.suspend();
+        userRepository.save(user);
+    }
+
+    @Override
+    public void activateUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        UserContext context = new UserContext(user);
+        context.activate();
+        userRepository.save(user);
+    }
+
+    @Override
+    public void closeUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        UserContext context = new UserContext(user);
+        context.close();
+        userRepository.save(user);
+    }
+
 
 }

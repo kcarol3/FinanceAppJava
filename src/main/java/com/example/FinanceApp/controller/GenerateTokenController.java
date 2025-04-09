@@ -1,10 +1,9 @@
 package com.example.FinanceApp.controller;
 
-import com.example.FinanceApp.Command.TokenCommand.GenerateOtpCommand;
-import com.example.FinanceApp.Command.TokenCommand.GenerateResetTokenCommand;
-import com.example.FinanceApp.Command.TokenCommand.GenerateTokenInvoker;
-import com.example.FinanceApp.Command.TokenCommand.TokenCommandInterface;
-import com.example.FinanceApp.Command.TransferCommand.TransferCommandInterface;
+import com.example.FinanceApp.command.TokenCommand.GenerateOtpCommand;
+import com.example.FinanceApp.command.TokenCommand.GenerateResetTokenCommand;
+import com.example.FinanceApp.command.TokenCommand.GenerateTokenInvoker;
+import com.example.FinanceApp.command.TokenCommand.TokenCommandInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

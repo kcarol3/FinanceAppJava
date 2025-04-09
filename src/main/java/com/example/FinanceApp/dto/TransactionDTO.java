@@ -1,5 +1,7 @@
 package com.example.FinanceApp.dto;
 
+import com.example.FinanceApp.state.TransactionStateType;
+
 import java.time.LocalDateTime;
 
 public class TransactionDTO {
@@ -13,8 +15,9 @@ public class TransactionDTO {
     private String dateString;
     private LocalDateTime date;
     private String type;
+    private TransactionStateType state;
 
-    public TransactionDTO(Double amount, String currency, String name, String UUID, String description, Long accountId, String date, String type) {
+    public TransactionDTO(Double amount, String currency, String name, String UUID, String description, Long accountId, String date, String type, TransactionStateType state) {
         this.amount = amount;
         this.currency = currency;
         this.name = name;
@@ -23,6 +26,7 @@ public class TransactionDTO {
         this.accountId = accountId;
         this.dateString = date;
         this.type = type;
+        this.state = TransactionStateType.PLANNED;
     }
 
     public LocalDateTime getDate() {
@@ -101,4 +105,8 @@ public class TransactionDTO {
     public void setAccount(Long accountId) {
         this.accountId = accountId;
     }
+
+    public TransactionStateType getState() { return state; }
+
+    public void setState(TransactionStateType state) { this.state = state; }
 }

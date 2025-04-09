@@ -1,8 +1,8 @@
 package com.example.FinanceApp.controller;
 
-import com.example.FinanceApp.Command.TransferCommand.TransferCommand;
-import com.example.FinanceApp.Command.TransferCommand.TransferCommandInterface;
-import com.example.FinanceApp.Command.TransferCommand.TransferInvoker;
+import com.example.FinanceApp.command.TransferCommand.TransferCommand;
+import com.example.FinanceApp.command.TransferCommand.TransferCommandInterface;
+import com.example.FinanceApp.command.TransferCommand.TransferInvoker;
 import com.example.FinanceApp.dto.TransferDTO;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import org.springframework.http.ResponseEntity;

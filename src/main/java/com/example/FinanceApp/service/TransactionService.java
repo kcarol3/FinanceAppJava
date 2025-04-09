@@ -16,6 +16,8 @@ import com.example.FinanceApp.interpreter.MinimumBalanceExpression;
 import com.example.FinanceApp.repository.TransactionRepository;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
+import com.example.FinanceApp.state.TransactionContext;
+import com.example.FinanceApp.state.TransactionStateType;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,6 +45,8 @@ public class TransactionService implements TransactionServiceInterface {
 
     @Override
     public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) {
+        Transaction transaction = null;
+
         try {
             Double convertedAmount = toPlnAdapter.convert(transactionDto.getAmount(), transactionDto.getCurrency());
             LocalDateTime convertedDate = dateFormatAdapter.convertDate(transactionDto.getDateString());
@@ -50,7 +54,8 @@ public class TransactionService implements TransactionServiceInterface {
             transactionDto.setAmount(convertedAmount);
             transactionDto.setDate(convertedDate);
 
-            Transaction transaction = transactionFactory.createAccount(type, transactionDto);
+            transaction = transactionFactory.createAccount(type, transactionDto);
+            transaction.setState(TransactionStateType.PLANNED);
 
             if ("EXPENSE".equalsIgnoreCase(type)) {
                 BalanceExpression minBalanceRule = new MinimumBalanceExpression(50.0);
@@ -65,13 +70,55 @@ public class TransactionService implements TransactionServiceInterface {
             Account account = transaction.getAccount();
             accountService.createAndSaveAccountMemento(account);
 
-            transaction.processTransaction(account);
+            TransactionContext context = new TransactionContext(transaction);
+            context.process(); // -> COMPLETED
 
-            return transactionRepository.save(transaction);
-        } catch (IllegalArgumentException e) {
-            throw new TransactionValidationException("Transaction validation failed: " + e.getMessage(), e);
+            return transactionRepository.save(context.getTransaction());
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                TransactionContext context = new TransactionContext(transaction);
+                context.cancel();
+                transactionRepository.save(context.getTransaction());
+            }
+
+            throw new TransactionValidationException("Transaction failed: " + e.getMessage(), e);
         }
     }
+
+
+//    @Override
+//    public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) {
+//        try {
+//            Double convertedAmount = toPlnAdapter.convert(transactionDto.getAmount(), transactionDto.getCurrency());
+//            LocalDateTime convertedDate = dateFormatAdapter.convertDate(transactionDto.getDateString());
+//
+//            transactionDto.setAmount(convertedAmount);
+//            transactionDto.setDate(convertedDate);
+//
+//            Transaction transaction = transactionFactory.createAccount(type, transactionDto);
+//
+//            if ("EXPENSE".equalsIgnoreCase(type)) {
+//                BalanceExpression minBalanceRule = new MinimumBalanceExpression(50.0);
+//
+//                if (!minBalanceRule.interpret(transaction)) {
+//                    ;
+//                    throw new TransactionValidationException("Expense transaction failed validation: Insufficient balance.");
+//                }
+//            }
+//
+//            transactionValidator.validate(transaction);
+//
+//            Account account = transaction.getAccount();
+//            accountService.createAndSaveAccountMemento(account);
+//
+//            transaction.processTransaction(account);
+//
+//            return transactionRepository.save(transaction);
+//        } catch (IllegalArgumentException e) {
+//            throw new TransactionValidationException("Transaction validation failed: " + e.getMessage(), e);
+//        }
+//    }
 
     @Override
     public void validateTransaction(Transaction transaction) throws IllegalArgumentException {
