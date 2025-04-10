@@ -17,4 +17,5 @@ public interface UserServiceInterface {
     public void activateUser(Long userId);
     public void suspendUser(Long userId);
     public void closeUser(Long userId);
+    User getUserById(Long id);
 }

@@ -39,7 +39,6 @@ public class TransactionService implements TransactionServiceInterface {
 
     private final ApplicationEventPublisher publisher;
     private final TaxService taxService;
-
     public TransactionService(TransactionFactory transactionFactory, TransactionRepository transactionRepository, ToPlnAdapter toPlnAdapter, DateFormatTimeOptionalAdapter dateFormatAdapter, TransactionValidator transactionValidator, AccountServiceInterface accountService, ApplicationEventPublisher publisher, TaxService taxService) {
         this.transactionFactory = transactionFactory;
         this.transactionRepository = transactionRepository;
@@ -84,7 +83,7 @@ public class TransactionService implements TransactionServiceInterface {
             accountService.createAndSaveAccountMemento(account);
 
             TransactionContext context = new TransactionContext(transaction);
-            context.process(); // -> COMPLETED
+            context.process();
 
             transaction.processTransaction(account);
 
