@@ -128,5 +128,10 @@ public class UserService implements UserServiceInterface {
         userRepository.save(user);
     }
 
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.getById(id);
+    }
+
 
 }

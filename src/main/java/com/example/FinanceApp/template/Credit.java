@@ -14,8 +14,6 @@ public class Credit {
         this.termInYears = termInYears;
     }
 
-    // Gettery i Settery
-
     public String getType() {
         return type;
     }

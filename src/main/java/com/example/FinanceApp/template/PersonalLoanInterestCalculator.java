@@ -14,14 +14,12 @@ public class PersonalLoanInterestCalculator extends InterestCalculator {
 
     @Override
     protected void calculatePrincipalAmount(Credit credit) {
-        // doliczamy prowizję 2%
         double fee = credit.getPrincipal() * 0.02;
         credit.setPrincipal(credit.getPrincipal() + fee);
     }
 
     @Override
     protected double calculateInterestAmount(Credit credit) {
-        // odsetki = principal * rate * (term * 12 / 12)
         int totalMonths = credit.getTermInYears() * 12;
         return credit.getPrincipal() * (credit.getInterestRate() / 12) * totalMonths;
     }
