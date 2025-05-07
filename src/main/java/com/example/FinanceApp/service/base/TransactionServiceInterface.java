@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 
+//Tydzień 7, ISP 5 ORYGINAŁ
 @Service
 public interface TransactionServiceInterface {
     Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) throws ParseException;

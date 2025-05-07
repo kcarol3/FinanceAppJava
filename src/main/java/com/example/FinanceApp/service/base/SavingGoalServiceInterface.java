@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//Tydzień 7, ISP 4 ORYGINAŁ
 @Service
 public interface SavingGoalServiceInterface {
     List<SavingGoalResponseDTO> getAllRootGoals();

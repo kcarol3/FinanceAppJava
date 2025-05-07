@@ -6,6 +6,7 @@ import com.example.FinanceApp.memento.UserMemento;
 
 import java.util.List;
 
+//Tydzień 7, ISP 6 ORYGINAŁ
 public interface UserServiceInterface {
     List<UserDTO> getAllUsers();
     UserDTO getUserClone(Long id);
