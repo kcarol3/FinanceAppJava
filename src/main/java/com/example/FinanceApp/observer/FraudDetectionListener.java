@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+// Tydzien 6, SRP 5
 @Component
 public class FraudDetectionListener {
     private static final Double FRAUD_THRESHOLD = new Double("10000");
@@ -24,3 +25,4 @@ public class FraudDetectionListener {
         return transaction.getAmount().compareTo(FRAUD_THRESHOLD) > 0;
     }
 }
+// Tydzien 6, SRP 5, koniec
