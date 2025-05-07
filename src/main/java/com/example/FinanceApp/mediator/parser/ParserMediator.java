@@ -46,5 +46,4 @@ public class ParserMediator implements ParserMediatorInterface {
         }
     }
 }
-
 // Tydzien 4, wzorzec Mediator 2, Koniec

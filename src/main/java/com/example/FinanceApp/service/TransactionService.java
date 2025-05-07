@@ -61,7 +61,7 @@ public class TransactionService implements TransactionServiceInterface {
             transactionDto.setAmount(convertedAmount);
             transactionDto.setDate(convertedDate);
 
-            transaction = transactionFactory.createAccount(type, transactionDto);
+            transaction = transactionFactory.createTransaction(type, transactionDto);
             transaction.setState(TransactionStateType.PLANNED);
 
             if ("EXPENSE".equalsIgnoreCase(type)) {

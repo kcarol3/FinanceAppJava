@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 //Tydzień 3, Wzorzec Facade 2, łączenie tworzenia konta, usera i logowania w jeden interfejs
-
+// Tydzien 6, SRP 6
 @Service
 public class NewUserFacade implements NewUserFacadeInterface {
 
@@ -42,5 +42,5 @@ public class NewUserFacade implements NewUserFacadeInterface {
         logger.log("[LOG] Add new User with account. Account type: OWN\n");
     }
 }
-
+// Tydzien 6, SRP 6, koniec
 // Koniec, tydzien 3, wzorzec Facade 2

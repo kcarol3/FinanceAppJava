@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 // Tydzien 3, Wzorzec Flyweight, tworzenie obiektow ikon do transakcji
-public class TransactionIcon implements TransactionIconInterface{
+public class TransactionIcon implements TransactionIconInterface {
     private final BufferedImage image;
 
     public TransactionIcon(String imagePath) throws IOException {

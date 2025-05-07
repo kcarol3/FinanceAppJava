@@ -3,6 +3,7 @@ package com.example.FinanceApp.config;
 import java.util.UUID;
 
 //Tydzień 1, Wzorzec Singleton 2, tworzenie UUID transakcji
+//Tydzień 6, SRP 2
 public class UUIDGenerator {
     private static volatile UUIDGenerator instance;
 
@@ -24,4 +25,5 @@ public class UUIDGenerator {
     }
 
 }
+//Tydzień 6, SRP 2, Koniec
 //Koniec, Tydzień 1, Wzorzec Singleton 2
