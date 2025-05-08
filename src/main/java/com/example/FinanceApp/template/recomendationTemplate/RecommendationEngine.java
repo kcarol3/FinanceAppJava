@@ -6,6 +6,7 @@ import com.example.FinanceApp.entity.base.User;
 import java.util.Optional;
 
 // Tydzien 5, wzorzec Template  2, abstrakcja silnika rekomendacji
+// tydzien 7, dependency inversion 3
 public abstract class RecommendationEngine {
 
     public final Optional<Recommendation> generate(User user) {

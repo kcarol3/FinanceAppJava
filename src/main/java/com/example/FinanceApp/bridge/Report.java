@@ -3,6 +3,7 @@ package com.example.FinanceApp.bridge;
 import com.example.FinanceApp.entity.base.Account;
 
 // Tydzien 2, Wzorzec Bridge 1 - abstrakcja dla raportu po którym mogą powstawac nowe typy raportów ktore tez implementują ReportExporter
+// tydzien 7, dependency inversion 5
 public abstract class Report {
     protected ReportExporter exporter;
     protected Account account;

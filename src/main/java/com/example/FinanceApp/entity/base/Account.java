@@ -21,6 +21,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = SavingsAccount.class, name = "SAVINGS"),
         @JsonSubTypes.Type(value = OwnAccount.class, name = "OWN")
 })
+//tydzien 7, dependency inversion 1
 public abstract class Account implements AccountGroupInterface {
 
     @Id

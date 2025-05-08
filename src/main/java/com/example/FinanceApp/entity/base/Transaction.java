@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "transaction_type", discriminatorType = DiscriminatorType.STRING)
+//tydzien 7, dependency inversion 2
 public abstract class Transaction implements Cloneable {
 
     @Id

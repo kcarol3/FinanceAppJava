@@ -26,6 +26,7 @@ public class ReportService implements ReportServiceInterface {
             exporter = new TxtExporter();
         }
 
+        // tydzien 7, dependency inversion 5, wykorzystanie
         Report report;
         if ("balance".equalsIgnoreCase(reportType)) {
             report = new BalanceReport(exporter, accountRepository.findById(id).get());
