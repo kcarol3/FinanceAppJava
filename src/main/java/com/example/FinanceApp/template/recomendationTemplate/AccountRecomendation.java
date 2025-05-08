@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import com.example.FinanceApp.entity.base.User;
 
+// tydzien 7, dependency inversion 3, impl
 @Component
 public class AccountRecomendation extends RecommendationEngine {
     @Override

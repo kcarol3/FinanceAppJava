@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.List;
 
+// tydzien 7, dependency inversion 6
 @Service
 public abstract class Parser {
 
