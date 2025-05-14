@@ -3,6 +3,9 @@ package com.example.FinanceApp.controller;
 import com.example.FinanceApp.dto.UserDTO;
 import com.example.FinanceApp.service.UserService;
 import com.example.FinanceApp.service.base.NewUserFacadeInterface;
+import com.example.FinanceApp.service.base.UserService.UserManagementServiceInterface;
+import com.example.FinanceApp.service.base.UserService.UserMementoServiceInterface;
+import com.example.FinanceApp.service.base.UserService.UserStateServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +15,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService userService;
+    private final UserManagementServiceInterface userService;
+    private final UserMementoServiceInterface userMementoService;
+    private final UserStateServiceInterface userStateService;
     private final NewUserFacadeInterface newUserFacade;
 
-    public UserController(UserService userService, NewUserFacadeInterface newUserFacade) {
+    public UserController(UserManagementServiceInterface userService, UserMementoServiceInterface userMementoService, UserStateServiceInterface userStateService, NewUserFacadeInterface newUserFacade) {
         this.userService = userService;
+        this.userMementoService = userMementoService;
+        this.userStateService = userStateService;
         this.newUserFacade = newUserFacade;
     }
 
@@ -44,7 +51,7 @@ public class UserController {
     @PostMapping("/restore/{userId}")
     public String restoreAccountState(@PathVariable Long userId) {
         try {
-            userService.restoreUserState(userId, userService.findFirstByUserIdOrderByIdDesc(userId).getId());
+            userMementoService.restoreUserState(userId, userMementoService.findFirstByUserIdOrderByIdDesc(userId).getId());
             return "User state with ID " + userId + " has been restored to the previous state.";
         } catch (Exception e) {
             return "Error restoring user state: " + e.getMessage();
@@ -53,19 +60,19 @@ public class UserController {
 
     @PostMapping("/{id}/suspend")
     public ResponseEntity<Void> suspendUser(@PathVariable Long id) {
-        userService.suspendUser(id);
+        userStateService.suspendUser(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/activate")
     public ResponseEntity<Void> activateUser(@PathVariable Long id) {
-        userService.activateUser(id);
+        userStateService.activateUser(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/close")
     public ResponseEntity<Void> closeUser(@PathVariable Long id) {
-        userService.closeUser(id);
+        userStateService.closeUser(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("INCOME")
 public class IncomeTransaction extends Transaction {
     public IncomeTransaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date) {
-        super(amount, currency, name, description, account,date);
+        super(amount, currency, name, description, account, date);
     }
 
     public IncomeTransaction() {

@@ -13,12 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/chart")
 public class FinancialChartController {
+    private final Double REVENUE_VALUE = 1500.0;
+    private final Double EXPENSE_VALUE = 500.0;
 
     @GetMapping("/generate")
     public ResponseEntity<String> generateFinancialCharts() {
         List<FinancialData> financialDataList = Arrays.asList(
-                new Revenue(1500.0),
-                new Expense(800.0)
+                new Revenue(REVENUE_VALUE),
+                new Expense(EXPENSE_VALUE)
         );
 
         FinancialChartVisitorImpl chartGenerator = new FinancialChartVisitorImpl();

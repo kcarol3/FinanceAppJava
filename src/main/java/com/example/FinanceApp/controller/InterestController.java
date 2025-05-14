@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/interest")
 public class InterestController {
-
     private final MortgageInterestCalculator mortgageInterestCalculator;
     private final PersonalLoanInterestCalculator personalLoanInterestCalculator;
 

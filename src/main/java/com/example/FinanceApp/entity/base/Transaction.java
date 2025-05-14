@@ -86,9 +86,13 @@ public abstract class Transaction implements Cloneable {
         return id;
     }
 
-    public String getCurrency() { return currency; }
+    public String getCurrency() {
+        return currency;
+    }
 
-    public void setCurrency(String currency) { this.currency = currency; }
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public Double getAmount() {
         return amount;
@@ -118,17 +122,21 @@ public abstract class Transaction implements Cloneable {
         this.description = description;
     }
 
-    public TransactionStateType getState() { return state; }
+    public TransactionStateType getState() {
+        return state;
+    }
 
-    public void setState(TransactionStateType state) { this.state = state; }
+    public void setState(TransactionStateType state) {
+        this.state = state;
+    }
 
     //Tydzień 1, Wzorzec Prototype 2, klonowanie transakcji na potrzeby transakcji cyklicznej
     @Override
     public Transaction clone() {
         try {
-            Transaction clone = (Transaction) super.clone();
+            Transaction transactionClone = (Transaction) super.clone();
 
-            return clone;
+            return transactionClone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

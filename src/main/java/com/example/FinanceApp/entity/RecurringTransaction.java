@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class RecurringTransaction extends Transaction {
     private LocalDate nextExecutionDate;
     private String frequency; // DAILY, WEEKLY, MONTHLY
+
     public RecurringTransaction(Double amount, String currency, String name, String description, Account account, LocalDateTime date) {
         super(amount, currency, name, description, account, date);
     }

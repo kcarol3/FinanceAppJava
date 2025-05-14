@@ -1,8 +1,6 @@
 package com.example.FinanceApp.mediator;
 
-import org.springframework.stereotype.Component;
-
-public class ApplicationImpl extends Application{
+public class ApplicationImpl extends Application {
     public ApplicationImpl(NotificationMediatorInterface mediator, String email) {
         super(mediator, email);
     }

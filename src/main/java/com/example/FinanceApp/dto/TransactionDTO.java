@@ -57,9 +57,13 @@ public class TransactionDTO {
         this.dateString = dateString;
     }
 
-    public String getCurrency() { return currency; }
+    public String getCurrency() {
+        return currency;
+    }
 
-    public void setCurrency(String currency) { this.currency = currency; }
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public String getType() {
         return type;
@@ -118,7 +122,11 @@ public class TransactionDTO {
         this.accountId = accountId;
     }
 
-    public TransactionStateType getState() { return state; }
+    public TransactionStateType getState() {
+        return state;
+    }
 
-    public void setState(TransactionStateType state) { this.state = state; }
+    public void setState(TransactionStateType state) {
+        this.state = state;
+    }
 }

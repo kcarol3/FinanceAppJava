@@ -12,7 +12,7 @@ public class MinimumBalanceExpression implements BalanceExpression {
     }
 
     @Override
-    public boolean interpret(Transaction transaction) {
+    public boolean balanceExpressionInterpret(Transaction transaction) {
         Account account = transaction.getAccount();
         return (account.getBalance() - transaction.getAmount()) >= minBalance;
     }

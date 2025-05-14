@@ -8,7 +8,9 @@ import java.util.Optional;
 //Tydzień 7, ISP 4
 public interface SavingGoalQueryServiceInterface {
     List<SavingGoalResponseDTO> getAllRootGoals();
+
     List<SavingGoalResponseDTO> getAllGoals();
+
     Optional<SavingGoalResponseDTO> getGoalById(Long id);
 }
 //Tydzień 7, ISP 4, koniec

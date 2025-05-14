@@ -22,6 +22,7 @@ public class AccountController {
     @PostMapping
     public Account createAccount(@RequestParam String type) {
         logger.log("Create account type: " + type + "\n");
+
         return accountService.createAndSaveAccount(type);
     }
 
@@ -29,6 +30,7 @@ public class AccountController {
     public String deleteAccount(@PathVariable Long id) {
         try {
             accountServiceProxy.deleteAccount(id, "admin");
+
             return "Deleted account with id: " + id + "\n";
         } catch (Exception e) {
             return e.getMessage();
@@ -39,6 +41,7 @@ public class AccountController {
     public String restoreAccountState(@PathVariable Long accountId) {
         try {
             accountService.restoreAccountState(accountId, accountService.findFirstByAccountIdOrderByIdDesc(accountId).getId());
+
             return "Account state with ID " + accountId + " has been restored to the previous state.";
         } catch (Exception e) {
             return "Error restoring account state: " + e.getMessage();

@@ -5,6 +5,7 @@ import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -20,31 +21,38 @@ public class ParserMediator implements ParserMediatorInterface {
         this.parsers = parsers;
     }
 
+
     @Override
     public void sync(MultipartFile file) {
         try {
-            String contentType = file.getContentType();
+            List<TransactionDTO> transactions = this.parseTransaction(file);
 
-            // tydzien 7, dependency inversion 6, wykorzystanie
-            Parser parser = parsers.stream()
-                    .filter(p -> p.supports(contentType))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Nieobsługiwany format pliku: " + contentType));
-
-            List<TransactionDTO> transactions = parser.parse(file.getInputStream());
-
-            transactions.forEach(transactionDTO -> {
-                try {
-                    transactionService.createAndSaveTransaction(transactionDTO.getType(), transactionDTO);
-                } catch (ParseException e) {
-                    throw new RuntimeException("Blad konwersji");
-                }
-            });
-
+            this.processTransaction(transactions);
             System.out.println("Zapisano " + transactions.size() + " transakcji.");
         } catch (Exception e) {
             throw new RuntimeException("Błąd przetwarzania pliku", e);
         }
+    }
+
+    private void processTransaction(List<TransactionDTO> transactions) {
+        transactions.forEach(transactionDTO -> {
+            try {
+                transactionService.createAndSaveTransaction(transactionDTO.getType(), transactionDTO);
+            } catch (ParseException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+    }
+
+    private List<TransactionDTO> parseTransaction(MultipartFile file) throws Exception {
+        String contentType = file.getContentType();
+
+        Parser parser = parsers.stream()
+                .filter(p -> p.supports(contentType))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Nieobsługiwany format pliku: " + contentType));
+
+        return parser.parse(file.getInputStream());
     }
 }
 // Tydzien 4, wzorzec Mediator 2, Koniec

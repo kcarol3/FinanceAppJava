@@ -8,5 +8,5 @@ import java.util.List;
 
 @Service
 public interface ParserMediatorInterface {
-    void  sync(MultipartFile file);
+    void sync(MultipartFile file);
 }

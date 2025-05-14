@@ -8,6 +8,7 @@ public class BasicTransactionValidator implements TransactionValidator {
     @Override
     public void validate(Transaction transaction) throws IllegalArgumentException {
         if (transaction.getAmount() == null) {
+            //tydzien 8, zwracanie wyjątku 2
             throw new IllegalArgumentException("Amount cannot be null");
         }
     }

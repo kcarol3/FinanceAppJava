@@ -2,6 +2,7 @@ package com.example.FinanceApp.entity;
 
 import com.example.FinanceApp.Composite.base.SavingGoalInterface;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class SavingGoal implements SavingGoalInterface {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<SavingGoal> subGoals = new ArrayList<>();
 
-    public SavingGoal() {}
+    public SavingGoal() {
+    }
 
     public SavingGoal(String name, double targetAmount, SavingGoal parent) {
         this.name = name;

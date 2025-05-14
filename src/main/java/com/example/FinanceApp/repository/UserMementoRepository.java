@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMementoRepository extends JpaRepository<UserMemento, Long> {
-   UserMemento findTopByUserIdOrderByIdDesc(Long userId);
+    UserMemento findTopByUserIdOrderByIdDesc(Long userId);
 }

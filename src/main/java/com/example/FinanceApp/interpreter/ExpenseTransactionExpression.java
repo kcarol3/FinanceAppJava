@@ -15,7 +15,7 @@ public class ExpenseTransactionExpression implements ExpenseExpression {
     }
 
     @Override
-    public double interpret(List<Transaction> transactions) {
+    public double expenseExpressionInterpret(List<Transaction> transactions) {
         ExpenseTransactionIterator iterator = new ExpenseTransactionIterator(transactions, accountId);
 
         double totalExpenses = 0.0;

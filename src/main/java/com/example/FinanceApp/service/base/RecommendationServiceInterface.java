@@ -8,5 +8,6 @@ import java.util.List;
 //Tydzień 7, ISP 3 ORYGINAŁ
 public interface RecommendationServiceInterface {
     List<Recommendation> generateAndSaveAll(User user);
+
     List<Recommendation> getForUser(Long userId);
 }

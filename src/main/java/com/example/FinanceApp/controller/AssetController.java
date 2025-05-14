@@ -23,6 +23,7 @@ public class AssetController {
     @PostMapping
     public ResponseEntity<Asset> createAsset(@RequestBody Asset asset) {
         Asset saved = assetRepository.save(asset);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 

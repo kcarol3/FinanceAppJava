@@ -21,7 +21,8 @@ public class Alert {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public Alert() {}
+    public Alert() {
+    }
 
     public Alert(String message, LocalDateTime createdAt, Account account) {
         this.message = message;

@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AccountGroupServiceInterface {
     AccountGroup createAccountGroup(String name);
+
     void addToGroup(Long accountGroup, Long account);
 }

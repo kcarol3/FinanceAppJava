@@ -20,6 +20,7 @@ public class ApiImportController {
     @PostMapping("/sync")
     public ResponseEntity<String> syncTransactions(@RequestParam("file") MultipartFile file) {
         mediator.sync(file);
+
         return ResponseEntity.ok("Dane z pliku zostały przetworzone i zapisane.");
     }
 }

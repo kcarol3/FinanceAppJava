@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/bank")
 public class BankController {
-
     private final BankService bankService;
 
     public BankController(BankService bankService) {

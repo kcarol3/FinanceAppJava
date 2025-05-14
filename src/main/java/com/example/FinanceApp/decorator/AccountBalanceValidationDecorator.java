@@ -19,6 +19,7 @@ public class AccountBalanceValidationDecorator implements TransactionValidator {
         Account account = transaction.getAccount();
         Double balance = account.getBalance();
         if (transaction instanceof ExpenseTransaction && balance < transaction.getAmount()) {
+            //tydzien 8, zwracanie wyjątku 3
             throw new IllegalArgumentException("Insufficient funds for this transaction");
         }
     }

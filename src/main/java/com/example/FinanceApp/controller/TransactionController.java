@@ -31,11 +31,10 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createTransaction(
-            @RequestBody TransactionDTO requestDto) {
+    public ResponseEntity<String> createTransaction(@RequestBody TransactionDTO requestDto) {
 
         try {
-            Transaction transaction = limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);
+            limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);
             return new ResponseEntity<>("Transaction created!", HttpStatus.CREATED);
         } catch (TransactionValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
