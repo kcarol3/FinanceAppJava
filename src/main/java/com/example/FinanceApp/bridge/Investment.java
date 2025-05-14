@@ -1,6 +1,6 @@
 package com.example.FinanceApp.bridge;
 
-// Tydzien 2, Wzorzec Bridge 2 - abstrkacja dla obiektu inwestowania, po ktorym dziedziczą dalej nowe typy inwestowania
+// Tydzien 2, Wzorzec Bridge 2 - abstrakcja dla obiektu inwestowania, po ktorym dziedziczą dalej nowe typy inwestowania
 public abstract class Investment {
     protected InvestmentType investmentType;
 
