@@ -25,6 +25,7 @@ public class ParserMediator implements ParserMediatorInterface {
         try {
             String contentType = file.getContentType();
 
+            // tydzien 7, dependency inversion 6, wykorzystanie
             Parser parser = parsers.stream()
                     .filter(p -> p.supports(contentType))
                     .findFirst()

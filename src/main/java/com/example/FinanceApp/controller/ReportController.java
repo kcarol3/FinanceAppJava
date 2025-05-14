@@ -1,14 +1,15 @@
 package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.service.ReportService;
+import com.example.FinanceApp.service.base.ReportServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reports")
 public class ReportController {
-    private final ReportService reportService;
+    private final ReportServiceInterface reportService;
 
-    public ReportController(ReportService reportService) {
+    public ReportController(ReportServiceInterface reportService) {
         this.reportService = reportService;
     }
 

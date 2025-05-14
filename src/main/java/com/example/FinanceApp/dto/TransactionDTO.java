@@ -29,6 +29,18 @@ public class TransactionDTO {
         this.state = TransactionStateType.PLANNED;
     }
 
+    public TransactionDTO() {
+
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }

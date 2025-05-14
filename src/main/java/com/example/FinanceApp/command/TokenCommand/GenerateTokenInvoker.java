@@ -1,5 +1,6 @@
 package com.example.FinanceApp.command.TokenCommand;
 
+//tydzien 7, dependency inversion, 7, wykoryztsanie
 public class GenerateTokenInvoker {
     public TokenCommandInterface tokenCommandInterface;
 

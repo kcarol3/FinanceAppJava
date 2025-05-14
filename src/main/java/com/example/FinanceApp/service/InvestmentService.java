@@ -24,6 +24,7 @@ public class InvestmentService implements InvestmentServiceInterface {
             throw new IllegalArgumentException("Unknown term of investment");
         }
 
+        // tydzien 7, dependency inversion 4, wykorzystanie
         Investment investment;
         if ("long".equalsIgnoreCase(term)) {
             investment = new LongTermInvestment(investmentType);
