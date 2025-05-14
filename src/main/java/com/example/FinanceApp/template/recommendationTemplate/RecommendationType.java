@@ -1,4 +1,4 @@
-package com.example.FinanceApp.template.recomendationTemplate;
+package com.example.FinanceApp.template.recommendationTemplate;
 
 public enum RecommendationType {
     ACCOUNT_SUGGESTION,

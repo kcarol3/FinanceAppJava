@@ -4,24 +4,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PersonalLoanInterestCalculator extends InterestCalculator {
+    private static final Integer MAX_CREDIT_VALUE = 100000;
+    private static final double PERCENT_VALUE_CREDIT = 0.02;
+    private static final Integer MONTHS_IN_YEAR = 12;
 
     @Override
     protected void validateCredit(Credit credit) {
-        if (credit.getPrincipal() > 100000) {
+        if (credit.getPrincipal() > MAX_CREDIT_VALUE) {
             throw new IllegalArgumentException("Za duży kredyt gotówkowy.");
         }
     }
 
     @Override
     protected void calculatePrincipalAmount(Credit credit) {
-        double fee = credit.getPrincipal() * 0.02;
+        double fee = credit.getPrincipal() * PERCENT_VALUE_CREDIT;
         credit.setPrincipal(credit.getPrincipal() + fee);
     }
 
     @Override
     protected double calculateInterestAmount(Credit credit) {
-        int totalMonths = credit.getTermInYears() * 12;
-        return credit.getPrincipal() * (credit.getInterestRate() / 12) * totalMonths;
+        int totalMonths = credit.getTermInYears() * MONTHS_IN_YEAR;
+        return credit.getPrincipal() * (credit.getInterestRate() / MONTHS_IN_YEAR) * totalMonths;
     }
 
     @Override

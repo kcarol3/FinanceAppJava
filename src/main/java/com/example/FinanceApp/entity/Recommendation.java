@@ -1,6 +1,6 @@
 package com.example.FinanceApp.entity;
 
-import com.example.FinanceApp.template.recomendationTemplate.RecommendationType;
+import com.example.FinanceApp.template.recommendationTemplate.RecommendationType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

@@ -7,9 +7,8 @@ import java.math.BigDecimal;
 
 @Component("marketValuationStrategy")
 public class MarketValuationStrategy implements AssetValuationStrategy {
-    // na podstawie ceny rynkowej
     @Override
-    public BigDecimal valueAsset(Asset asset, BigDecimal additionalFactors) {
-        return asset.getMarketPrice().multiply(additionalFactors);
+    public BigDecimal valueAsset(Asset asset, String method, BigDecimal additionalFactor) {
+        return asset.getMarketPrice().multiply(additionalFactor);
     }
 }

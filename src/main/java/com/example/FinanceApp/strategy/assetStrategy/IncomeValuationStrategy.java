@@ -4,13 +4,13 @@ import com.example.FinanceApp.entity.Asset;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Component("incomeValuationStrategy")
 public class IncomeValuationStrategy implements AssetValuationStrategy {
-    // na podstawie dochodu
     @Override
-    public BigDecimal valueAsset(Asset asset, BigDecimal additionalFactors) {
-        BigDecimal incomeValue = asset.getAnnualIncome().divide(new BigDecimal("0.05"));
-        return incomeValue.multiply(additionalFactors);
+    public BigDecimal valueAsset(Asset asset, String method, BigDecimal additionalFactor) {
+        BigDecimal incomeValue = asset.getAnnualIncome().divide(new BigDecimal("0.05"), RoundingMode.UP);
+        return incomeValue.multiply(additionalFactor);
     }
 }

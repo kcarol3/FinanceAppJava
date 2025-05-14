@@ -1,7 +1,6 @@
 package com.example.FinanceApp.strategy.assetStrategy;
 
 import com.example.FinanceApp.entity.Asset;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

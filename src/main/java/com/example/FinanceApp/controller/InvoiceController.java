@@ -25,7 +25,7 @@ public class InvoiceController {
             item.accept(calculator);
         }
 
-        return calculator.getTotal();
+        return calculator.getTotalAmount();
     }
 }
 

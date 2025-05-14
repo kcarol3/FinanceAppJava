@@ -30,17 +30,19 @@ public class TransactionController {
         this.transactionIconFactory = transactionIconFactory;
     }
 
+    //Tydzień 8, obsługa wyjątku 1
     @PostMapping
     public ResponseEntity<String> createTransaction(
             @RequestBody TransactionDTO requestDto) {
 
         try {
-            Transaction transaction = limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);
+            limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);
             return new ResponseEntity<>("Transaction created!", HttpStatus.CREATED);
         } catch (TransactionValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    //Koniec, tydzień 8, obsługa wyjątku 1
 
     @GetMapping("/{accountId}")
     public ResponseEntity<String> getSumOfExpenses(@PathVariable Long accountId) {

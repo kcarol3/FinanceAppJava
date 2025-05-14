@@ -2,10 +2,10 @@ package com.example.FinanceApp.template;
 
 public class Credit {
 
-    private String type;         // np. "Hipoteczny", "Gotówkowy"
-    private double principal;    // Kwota główna kredytu
-    private double interestRate; // Oprocentowanie (np. 0.05 = 5%)
-    private int termInYears;     // Okres kredytowania w latach
+    private String type;
+    private double principal;
+    private double interestRate;
+    private int termInYears;
 
     public Credit(String type, double principal, double interestRate, int termInYears) {
         this.type = type;

@@ -3,7 +3,7 @@ package com.example.FinanceApp.state;
 import com.example.FinanceApp.entity.base.User;
 
 public class UserContext {
-    private User user;
+    private final User user;
     private UserState state;
 
     public UserContext(User user) {
@@ -14,6 +14,11 @@ public class UserContext {
     public void setState(UserState state) {
         this.state = state;
     }
+
+    public User getUser() {
+        return user;
+    }
+
 
     public void suspend() {
         state.suspend(this);
@@ -27,9 +32,6 @@ public class UserContext {
         state.close(this);
     }
 
-    public User getUser() {
-        return user;
-    }
 
     private UserState resolveState(UserStateType stateType) {
         return switch (stateType) {

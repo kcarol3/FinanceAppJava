@@ -29,7 +29,7 @@ public class AccountGroupController {
 
     @GetMapping("/balance")
     public double getBalance(@RequestParam Long accountGroup) {
-        AccountGroup findedGroup = accountGroupRepository.getById(accountGroup);
-        return findedGroup.getFullBalance();
+        AccountGroup foundGroup = accountGroupRepository.getById(accountGroup);
+        return foundGroup.getFullBalance();
     }
 }

@@ -3,7 +3,7 @@ package com.example.FinanceApp.service;
 import com.example.FinanceApp.entity.Recommendation;
 import com.example.FinanceApp.entity.base.User;
 import com.example.FinanceApp.repository.RecommendationRepository;
-import com.example.FinanceApp.template.recomendationTemplate.RecommendationEngine;
+import com.example.FinanceApp.template.recommendationTemplate.RecommendationEngine;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class RecommendationService {
 
     public List<Recommendation> generateAndSaveAll(User user) {
         List<Recommendation> results = engines.stream()
-                .map(engine -> engine.generate(user))
+                .map(engine -> engine.generateRecommendation(user))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();

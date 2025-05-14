@@ -7,9 +7,8 @@ import java.math.BigDecimal;
 
 @Component("costValuationStrategy")
 public class CostValuationStrategy implements AssetValuationStrategy {
-    // na podstawie kosztu
     @Override
-    public BigDecimal valueAsset(Asset asset, BigDecimal additionalFactors) {
-        return asset.getPurchaseCost().multiply(additionalFactors);
+    public BigDecimal valueAsset(Asset asset, String method, BigDecimal additionalFactor) {
+        return asset.getPurchaseCost().multiply(additionalFactor);
     }
 }
