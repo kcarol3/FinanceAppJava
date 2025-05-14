@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/transactions")
@@ -30,18 +31,17 @@ public class TransactionController {
         this.transactionIconFactory = transactionIconFactory;
     }
 
-    //Tydzień 8, obsługa wyjątku 1
+    //Tydzień 8, obsługa wyjątku 1, wyjątku 2
     @PostMapping
     public ResponseEntity<String> createTransaction(@RequestBody TransactionDTO requestDto) {
-
         try {
             limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);
-            return new ResponseEntity<>("Transaction created!", HttpStatus.CREATED);
-        } catch (TransactionValidationException e) {
+        } catch (TransactionValidationException | ParseException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>("Transaction created!", HttpStatus.CREATED);
     }
-    //Koniec, tydzień 8, obsługa wyjątku 1
+    //Koniec, tydzień 8, obsługa wyjątku 1, wyjątku 2
 
     @GetMapping("/{accountId}")
     public ResponseEntity<String> getSumOfExpenses(@PathVariable Long accountId) {
@@ -55,19 +55,23 @@ public class TransactionController {
         return transactionService.createRecurringTransaction(transactionId, frequency);
     }
 
+    //Tydzień 8, obsługa wyjątku 3
     @GetMapping("/{type}/image")
-    public ResponseEntity<byte[]> getTransactionImage(@PathVariable String type) throws IOException {
+    public ResponseEntity<byte[]> getTransactionImage(@PathVariable String type) {
         BufferedImage image = transactionIconFactory.getTransactionIcon(type.toUpperCase()).getImage();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
-                .body(convertImageToByteArray(image));
+        try {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
+                    .body(convertImageToByteArray(image));
+        } catch(IOException e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+    //Koniec, tydzień 8, obsługa wyjątku 3
 
     private byte[] convertImageToByteArray(BufferedImage image) throws IOException {
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            ImageIO.write(image, "PNG", byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "PNG", byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }

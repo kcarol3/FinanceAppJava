@@ -1,17 +1,12 @@
 package com.example.FinanceApp.service;
 
 import com.example.FinanceApp.dto.UserDTO;
-import com.example.FinanceApp.memento.UserMemento;
-import com.example.FinanceApp.repository.UserMementoRepository;
 import com.example.FinanceApp.repository.UserRepository;
 import com.example.FinanceApp.service.base.UserService.UserManagementServiceInterface;
 import com.example.FinanceApp.service.base.UserService.UserMementoServiceInterface;
-import com.example.FinanceApp.service.base.UserServiceInterface;
-import com.example.FinanceApp.state.UserContext;
 import com.example.FinanceApp.state.UserStateType;
 import org.springframework.stereotype.Service;
 import com.example.FinanceApp.entity.base.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -53,7 +48,7 @@ public class UserService implements UserManagementServiceInterface {
         return userDTOs;
     }
 
-    public UserDTO getUserClone(Long index) {
+    public UserDTO getUserClone(Long index) throws RuntimeException {
         if (index < 0 || index >= users.size()) {
             return null;
         }

@@ -13,7 +13,7 @@ public class FinancialChartVisitorImpl implements FinancialChartVisitor {
             writer.write(jsonContent);
             System.out.println("Raport zapisany do pliku JSON.");
         } catch (IOException e) {
-            System.out.println("Błąd podczas zapisywania do pliku JSON: " + e.getMessage());
+            throw new RuntimeException("Błąd podczas zapisywania do pliku JSON");
         }
     }
 
@@ -24,7 +24,7 @@ public class FinancialChartVisitorImpl implements FinancialChartVisitor {
             writer.write(content);
             System.out.println("Wykres został zapisany do pliku TXT.");
         } catch (IOException e) {
-            System.out.println("Błąd podczas zapisywania do pliku TXT: " + e.getMessage());
+            throw new RuntimeException("Błąd podczas zapisywania do pliku JSON");
         }
     }
 }

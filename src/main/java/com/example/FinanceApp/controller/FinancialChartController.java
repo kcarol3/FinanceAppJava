@@ -24,11 +24,16 @@ public class FinancialChartController {
         );
 
         FinancialChartVisitorImpl chartGenerator = new FinancialChartVisitorImpl();
-
-        for (FinancialData data : financialDataList) {
-            data.accept(chartGenerator);
+        //Tydzien 8, obsluga wyjatku 6
+        try {
+            for (FinancialData data : financialDataList) {
+                data.accept(chartGenerator);
+            }
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        //Koniec, tydzien 8, obsluga wyjatku 6
 
-        return new ResponseEntity<>("Wykresy zostały wygenerowane!",HttpStatus.OK);
+        return new ResponseEntity<>("Wykresy zostały wygenerowane!", HttpStatus.OK);
     }
 }

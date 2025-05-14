@@ -1,7 +1,6 @@
 package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.dto.UserDTO;
-import com.example.FinanceApp.service.UserService;
 import com.example.FinanceApp.service.base.NewUserFacadeInterface;
 import com.example.FinanceApp.service.base.UserService.UserManagementServiceInterface;
 import com.example.FinanceApp.service.base.UserService.UserMementoServiceInterface;
@@ -32,10 +31,18 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //Tydzień 8, obsługa wyjątku 5
     @GetMapping("/{index}/clone")
-    public UserDTO getClonedUser(@PathVariable Long index) {
-        return userService.getUserClone(index);
+    public ResponseEntity<UserDTO> getClonedUser(@PathVariable Long index) {
+        try {
+            UserDTO clonedUser = userService.getUserClone(index);
+            return ResponseEntity.ok(clonedUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
+    //Koniec,tydzień 8, obsługa wyjątku 5
 
     @PostMapping("/new")
     public void saveNewUser(@RequestBody UserDTO userDTO) {

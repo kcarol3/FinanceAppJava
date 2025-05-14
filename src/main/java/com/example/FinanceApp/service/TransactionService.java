@@ -19,8 +19,6 @@ import com.example.FinanceApp.service.base.AccountServiceInterface;
 import com.example.FinanceApp.service.base.TransactionService.RecurringTransactionServiceInterface;
 import com.example.FinanceApp.service.base.TransactionService.TransactionAnalysisServiceInterface;
 import com.example.FinanceApp.service.base.TransactionService.TransactionCreationServiceInterface;
-import com.example.FinanceApp.service.base.TransactionService.TransactionValidationServiceInterface;
-import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import com.example.FinanceApp.strategy.taxStrategy.TaxService;
 import org.springframework.context.ApplicationEventPublisher;
 import com.example.FinanceApp.state.TransactionContext;
@@ -35,6 +33,7 @@ import java.util.List;
 public class TransactionService implements TransactionCreationServiceInterface, TransactionAnalysisServiceInterface, RecurringTransactionServiceInterface {
 
     private static final double MIN_BALANCE = 50.0;
+    private static final int DAYS_TO_ADD = 1;
     private final TransactionFactory transactionFactory;
     private final TransactionRepository transactionRepository;
     private final ToPlnAdapter toPlnAdapter;
@@ -57,18 +56,11 @@ public class TransactionService implements TransactionCreationServiceInterface, 
 
     @Override
     public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) {
-        Transaction transaction = null;
-        try {
-            transaction = initializeTransaction(type, transactionDto);
-            processTransaction(type, transaction);
-            saveTransaction(transaction);
-            return transaction;
-        } catch (IllegalArgumentException e) {
-            throw new TransactionValidationException("Transaction validation failed: " + e.getMessage(), e);
-        } catch (Exception e) {
-            handleTransactionFailure(transaction);
-            throw new TransactionValidationException("Transaction failed: " + e.getMessage(), e);
-        }
+        Transaction transaction;
+        transaction = initializeTransaction(type, transactionDto);
+        processTransaction(type, transaction);
+        saveTransaction(transaction);
+        return transaction;
     }
 
     @Override
@@ -86,7 +78,7 @@ public class TransactionService implements TransactionCreationServiceInterface, 
 
         RecurringTransaction recurringTransaction = new RecurringTransaction(
                 transaction.clone(),
-                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(DAYS_TO_ADD),
                 frequency
         );
 
@@ -130,14 +122,15 @@ public class TransactionService implements TransactionCreationServiceInterface, 
         }
     }
 
-    private Transaction initializeTransaction(String type, TransactionDTO transactionDto) {
-        Double convertedAmount = toPlnAdapter.convert(transactionDto.getAmount(), transactionDto.getCurrency());
-        LocalDateTime convertedDate = dateFormatAdapter.convertDate(transactionDto.getDateString());
-        transactionDto.setAmount(convertedAmount);
-        transactionDto.setDate(convertedDate);
-        Transaction transaction = transactionFactory.createTransaction(type, transactionDto);
-        transaction.setState(TransactionStateType.PLANNED);
-        extracted(type, transaction);
-        return transaction;
+    private Transaction initializeTransaction(String type, TransactionDTO transactionDto) throws IllegalArgumentException{
+            Double convertedAmount = toPlnAdapter.convert(transactionDto.getAmount(), transactionDto.getCurrency());
+            LocalDateTime convertedDate = dateFormatAdapter.convertDate(transactionDto.getDateString());
+            transactionDto.setAmount(convertedAmount);
+            transactionDto.setDate(convertedDate);
+            Transaction transaction = transactionFactory.createTransaction(type, transactionDto);
+            transaction.setState(TransactionStateType.PLANNED);
+            extracted(type, transaction);
+            return transaction;
+
     }
 }

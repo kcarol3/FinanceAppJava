@@ -11,6 +11,7 @@ import com.example.FinanceApp.service.TransactionService;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +37,7 @@ public class LimitingTransactionServiceProxy implements TransactionServiceInterf
     }
 
     @Override
-    public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) {
+    public Transaction createAndSaveTransaction(String type, TransactionDTO transactionDto) throws ParseException {
         int transactionLimit = 3;
         LocalDateTime now = LocalDateTime.now();
 
@@ -47,7 +48,6 @@ public class LimitingTransactionServiceProxy implements TransactionServiceInterf
         }
 
         Transaction transaction = realTransactionService.createAndSaveTransaction(type, transactionDto);
-
         transactionTimestamps.add(now);
 
         return transaction;

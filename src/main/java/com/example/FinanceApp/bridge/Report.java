@@ -2,6 +2,8 @@ package com.example.FinanceApp.bridge;
 
 import com.example.FinanceApp.entity.base.Account;
 
+import java.io.IOException;
+
 // Tydzien 2, Wzorzec Bridge 1 - abstrakcja dla raportu po którym mogą powstawac nowe typy raportów ktore tez implementują ReportExporter
 // tydzien 7, dependency inversion 5
 public abstract class Report {
@@ -15,7 +17,7 @@ public abstract class Report {
 
     public abstract String generateReport();
 
-    public void save() {
+    public void save() throws IOException {
         exporter.export(generateReport());
     }
 }
