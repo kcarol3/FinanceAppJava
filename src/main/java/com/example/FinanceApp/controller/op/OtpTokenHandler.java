@@ -9,12 +9,12 @@ import java.util.Map;
 
 @Component("OTP")
 public class OtpTokenHandler implements TokenHandler {
-
+    private final int OTP_TOKEN_LENGTH = 8;
     private final Map<String, String> otpStorage = new HashMap<>();
 
     @Override
     public String generate(String transactionId) {
-        String token = new GenerateTokenInvoker(new GenerateOtpCommand(6)).execute();
+        String token = new GenerateTokenInvoker(new GenerateOtpCommand(OTP_TOKEN_LENGTH)).execute();
         otpStorage.put(transactionId, token);
         return token;
     }

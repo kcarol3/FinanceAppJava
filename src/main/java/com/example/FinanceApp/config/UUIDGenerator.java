@@ -7,7 +7,8 @@ import java.util.UUID;
 public class UUIDGenerator {
     private static volatile UUIDGenerator instance;
 
-    private UUIDGenerator(){}
+    private UUIDGenerator() {
+    }
 
     public static UUIDGenerator getInstance() {
         if (instance == null) {
@@ -23,7 +24,6 @@ public class UUIDGenerator {
     public String generateTransactionId() {
         return UUID.randomUUID().toString();
     }
-
 }
 //Tydzień 6, SRP 2, Koniec
 //Koniec, Tydzień 1, Wzorzec Singleton 2

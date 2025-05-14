@@ -24,6 +24,7 @@ public class NotificationController {
         Application emailApp = new ApplicationImpl(notificationMediator, email);
         notificationMediator.add(emailApp);
         emailApp.notifyUser(message);
+
         return ResponseEntity.ok("Powiadomienie e-mailowe wysłane!");
     }
 }

@@ -4,6 +4,8 @@ import com.example.FinanceApp.dto.UserDTO;
 import com.example.FinanceApp.memento.UserMemento;
 import com.example.FinanceApp.repository.UserMementoRepository;
 import com.example.FinanceApp.repository.UserRepository;
+import com.example.FinanceApp.service.base.UserService.UserManagementServiceInterface;
+import com.example.FinanceApp.service.base.UserService.UserMementoServiceInterface;
 import com.example.FinanceApp.service.base.UserServiceInterface;
 import com.example.FinanceApp.state.UserContext;
 import com.example.FinanceApp.state.UserStateType;
@@ -16,29 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements UserServiceInterface {
+public class UserService implements UserManagementServiceInterface {
 
     private final List<User> users = new ArrayList<>();
     private final UserRepository userRepository;
-    private final UserMementoRepository userMementoRepository;
+    private final UserMementoServiceInterface userMementoService;
 
-    public UserService(UserRepository userRepository, UserMementoRepository userMementoRepository) {
+    public UserService(UserRepository userRepository, UserMementoServiceInterface userMementoService) {
         this.userRepository = userRepository;
-        this.userMementoRepository = userMementoRepository;
-        User user1 = User.builder()
-                .setName("Anna Nowak")
-                .setEmail("anna.nowak@example.com")
-                .setState(UserStateType.ACTIVE)
-                .build();
+        this.userMementoService = userMementoService;
+        initializeUsers();
+    }
 
-        User user2 = User.builder()
-                .setName("Piotr Nowak")
-                .setEmail("piotr.nowak@example.com")
-                .setState(UserStateType.ACTIVE)
-                .build();
-
+    private void initializeUsers() {
+        User user1 = createUser("Anna Nowak", "anna.nowak@example.com");
+        User user2 = createUser("Piotr Nowak", "piotr.nowak@example.com");
         users.add(user1);
         users.add(user2);
+    }
+
+    private User createUser(String name, String email) {
+        return User.builder()
+                .setName(name)
+                .setEmail(email)
+                .setState(UserStateType.ACTIVE)
+                .build();
     }
 
     public List<UserDTO> getAllUsers() {
@@ -66,7 +70,7 @@ public class UserService implements UserServiceInterface {
     public void editUser(Long userId, UserDTO updatedUser) {
         User user = userRepository.findById(userId).orElse(null);
         if(user != null){
-            createAndSaveUserMemento(user);
+            userMementoService.createAndSaveUserMemento(user);
             user.setName(updatedUser.getName());
             user.setEmail(updatedUser.getEmail());
             userRepository.save(user);
@@ -76,62 +80,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public void createAndSaveUserMemento(User user) {
-        UserMemento memento = new UserMemento();
-        memento.setName(user.getName());
-        memento.setEmail(user.getEmail());
-        memento.setUser(user);
-
-        user.addMementos(memento);
-        userMementoRepository.save(memento);
-    }
-
-    @Override
-    @Transactional
-    public void restoreUserState(Long userId, Long mementoId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
-
-        UserMemento memento = userMementoRepository.findById(mementoId)
-                .orElseThrow(() -> new RuntimeException("Memento not found"));
-
-        user.restoreFromMemento(memento);
-        userRepository.save(user);
-    }
-
-    @Override
-    public UserMemento findFirstByUserIdOrderByIdDesc(Long userId) {
-        return userMementoRepository.findTopByUserIdOrderByIdDesc(userId);
-    }
-
-    @Override
-    public void suspendUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        UserContext context = new UserContext(user);
-        context.suspend();
-        userRepository.save(user);
-    }
-
-    @Override
-    public void activateUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        UserContext context = new UserContext(user);
-        context.activate();
-        userRepository.save(user);
-    }
-
-    @Override
-    public void closeUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        UserContext context = new UserContext(user);
-        context.close();
-        userRepository.save(user);
-    }
-
-    @Override
     public User getUserById(Long id) {
         return userRepository.getById(id);
     }
-
-
 }

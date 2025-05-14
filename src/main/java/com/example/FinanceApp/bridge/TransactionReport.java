@@ -17,8 +17,8 @@ public class TransactionReport extends Report {
         TransactionIterator iterator = new TransactionIterator(account.getTransactions(), account.getId());
 
         while (iterator.hasNext()) {
-            Transaction t = iterator.next();
-            reportContent.append(t.toString()).append("\n");
+            Transaction transaction = iterator.next();
+            reportContent.append(transaction.toString()).append("\n");
         }
 
         return reportContent.toString();

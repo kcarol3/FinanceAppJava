@@ -7,16 +7,20 @@ import java.util.Map;
 
 @Service
 public class ExchangeRateService {
+    private static final Double USD_RATE = 3.85;
+    private static final Double EUR_RATE = 4.18;
+    private static final Double GBP_RATE = 4.99;
+    private static final Double DEFAULT_RATE = 4.99;
     private static final Map<String, Double> exchangeRates = new HashMap<String, Double>();
 
     static {
-        exchangeRates.put("USD", 3.85);
-        exchangeRates.put("EUR", 4.18);
-        exchangeRates.put("GBP", 4.99);
+        exchangeRates.put("USD", USD_RATE);
+        exchangeRates.put("EUR", EUR_RATE);
+        exchangeRates.put("GBP", GBP_RATE);
     }
 
     public Double getExchangeRate(String fromCurrency) {
-        switch(fromCurrency) {
+        switch (fromCurrency) {
             case "USD":
                 return exchangeRates.get("USD");
             case "EUR":
@@ -24,7 +28,7 @@ public class ExchangeRateService {
             case "GBP":
                 return exchangeRates.get("GBP");
             default:
-                return 1.0;
+                return DEFAULT_RATE;
         }
     }
 }

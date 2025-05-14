@@ -11,12 +11,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/invoice")
 public class InvoiceController {
+    private final Double INTERNET_VALUE = 30.0;
+    private final Double PHONE_VALUE = 50.0;
 
     @GetMapping("/total")
     public double getInvoiceTotal() {
         List<InvoiceItem> invoiceItems = Arrays.asList(
-                new InternetService(30.0),
-                new PhoneService(50.0)
+                new InternetService(INTERNET_VALUE),
+                new PhoneService(PHONE_VALUE)
         );
 
         InvoiceTotalCalculatorImpl calculator = new InvoiceTotalCalculatorImpl();

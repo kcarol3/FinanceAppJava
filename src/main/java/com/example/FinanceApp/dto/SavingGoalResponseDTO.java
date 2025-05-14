@@ -3,6 +3,7 @@ package com.example.FinanceApp.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import com.example.FinanceApp.entity.SavingGoal;
 
 
@@ -25,11 +26,28 @@ public class SavingGoalResponseDTO {
                 .collect(Collectors.toList());
     }
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public double getTargetAmount() { return targetAmount; }
-    public double getSavedAmount() { return savedAmount; }
-    public Long getParentId() { return parentId; }
-    public List<SavingGoalResponseDTO> getSubGoals() { return subGoals; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public double getSavedAmount() {
+        return savedAmount;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public List<SavingGoalResponseDTO> getSubGoals() {
+        return subGoals;
+    }
 }
 

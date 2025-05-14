@@ -34,10 +34,8 @@ public class InvestmentController {
     }
 
     @PostMapping("/valueAssets")
-    public BigDecimal valueAssets(@RequestParam Long userId,
-                                  @RequestParam String valuationMethod,
+    public BigDecimal valueAssets(@RequestParam String valuationMethod,
                                   @RequestParam BigDecimal additionalFactors) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         List<Asset> assets = assetRepository.findAll();
 
         BigDecimal totalValue = BigDecimal.ZERO;

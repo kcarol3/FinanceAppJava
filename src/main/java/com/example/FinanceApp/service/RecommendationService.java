@@ -4,13 +4,14 @@ import com.example.FinanceApp.entity.Recommendation;
 import com.example.FinanceApp.entity.base.User;
 import com.example.FinanceApp.repository.RecommendationRepository;
 import com.example.FinanceApp.template.recommendationTemplate.RecommendationEngine;
+import com.example.FinanceApp.service.base.RecommendationService.RecommendationGeneratorServiceInterface;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import java.util.List;
 
 @Service
-public class RecommendationService {
+public class RecommendationService implements RecommendationGeneratorServiceInterface {
     private final List<RecommendationEngine> engines;
     private final RecommendationRepository recommendationRepository;
 
@@ -20,6 +21,7 @@ public class RecommendationService {
         this.recommendationRepository = recommendationRepository;
     }
 
+    @Override
     public List<Recommendation> generateAndSaveAll(User user) {
         List<Recommendation> results = engines.stream()
                 .map(engine -> engine.generateRecommendation(user))
@@ -28,10 +30,6 @@ public class RecommendationService {
                 .toList();
 
         return recommendationRepository.saveAll(results);
-    }
-
-    public List<Recommendation> getForUser(Long userId) {
-        return recommendationRepository.findAllByUserId(userId);
     }
 }
 

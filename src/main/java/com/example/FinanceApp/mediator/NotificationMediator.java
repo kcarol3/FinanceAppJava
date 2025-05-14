@@ -1,6 +1,5 @@
 package com.example.FinanceApp.mediator;
 
-import jdk.jfr.Category;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

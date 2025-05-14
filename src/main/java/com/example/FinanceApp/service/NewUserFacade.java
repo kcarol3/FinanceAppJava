@@ -38,7 +38,7 @@ public class NewUserFacade implements NewUserFacadeInterface {
         newAccount.setUser(newUser);
         userRepository.save(newUser);
         accountRepository.save(newAccount);
-        
+
         logger.log("[LOG] Add new User with account. Account type: OWN\n");
     }
 }

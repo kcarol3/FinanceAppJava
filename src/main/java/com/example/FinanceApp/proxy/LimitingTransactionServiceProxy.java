@@ -21,6 +21,7 @@ import java.util.List;
 @Service
 public class LimitingTransactionServiceProxy implements TransactionServiceInterface {
 
+    private static final int DAYS_TO_ADD = 1;
     private final TransactionService realTransactionService;
     private final List<LocalDateTime> transactionTimestamps;
     private final TransactionValidator transactionValidator;
@@ -63,7 +64,7 @@ public class LimitingTransactionServiceProxy implements TransactionServiceInterf
         List<Transaction> transactions = transactionRepository.findAll();
         ExpenseExpression expenseExpression = new ExpenseTransactionExpression(accountId);
 
-        return expenseExpression.interpret(transactions);
+        return expenseExpression.expenseExpressionInterpret(transactions);
     }
 
 
@@ -74,7 +75,7 @@ public class LimitingTransactionServiceProxy implements TransactionServiceInterf
 
         RecurringTransaction recurringTransaction = new RecurringTransaction(
                 transaction.clone(),
-                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(DAYS_TO_ADD),
                 frequency
         );
 

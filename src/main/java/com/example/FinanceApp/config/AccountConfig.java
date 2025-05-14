@@ -5,19 +5,22 @@ package com.example.FinanceApp.config;
 //Tydzień 6, SRP 1
 public class AccountConfig {
     private static final AccountConfig instance = new AccountConfig();
+    private final Double BALANCE_AMOUNT = 500.00;
+    private final Double INTEREST_RATE = 4.5;
 
-    private AccountConfig() {}
+    private AccountConfig() {
+    }
 
     public static AccountConfig getInstance() {
         return instance;
     }
 
     public Double getBalance() {
-        return 0.0;
+        return BALANCE_AMOUNT;
     }
 
     public Double getInterestRate() {
-        return 4.5;
+        return INTEREST_RATE;
     }
 }
 //Tydzień 6, SRP 1, koniec

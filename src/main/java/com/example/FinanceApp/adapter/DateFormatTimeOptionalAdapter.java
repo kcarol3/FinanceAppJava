@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 // Tydzien 2, Wzorzec adapter 2 - ujednolicenie formatu daty dla stringow date lub datetime, wynikowo zawsze bedzie zapisany obiket LocalDateTime
 @Service
 public class DateFormatTimeOptionalAdapter implements DateConverter {
+    private final int MINIMAL_LENGHT = 10;
 
     @Override
     public LocalDateTime convertDate(String date) {
@@ -16,7 +17,7 @@ public class DateFormatTimeOptionalAdapter implements DateConverter {
         LocalDateTime parsedDate;
 
         try {
-            if (date.length() > 10) {
+            if (date.length() > this.MINIMAL_LENGHT) {
                 parsedDate = LocalDateTime.parse(date, formatterWithTime);
             } else {
                 parsedDate = LocalDateTime.parse(date + "T00:00:00", formatterWithTime);

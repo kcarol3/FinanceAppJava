@@ -23,7 +23,8 @@ public class Recommendation {
 
     private LocalDateTime createdAt;
 
-    public Recommendation() {}
+    public Recommendation() {
+    }
 
     public Recommendation(Long userId, Recommendation recommendation) {
         this.userId = userId;

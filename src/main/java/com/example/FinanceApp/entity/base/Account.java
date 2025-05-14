@@ -49,8 +49,13 @@ public abstract class Account implements AccountGroupInterface {
     @OneToMany(mappedBy = "account")
     private List<AccountMemento> mementos;
 
-    public void deposit(Double amount) { this.balance += amount; }
-    public void withdraw(Double amount) { this.balance -= amount; }
+    public void deposit(Double amount) {
+        this.balance += amount;
+    }
+
+    public void withdraw(Double amount) {
+        this.balance -= amount;
+    }
 
     public Long getId() {
         return id;
@@ -100,13 +105,21 @@ public abstract class Account implements AccountGroupInterface {
         this.accountGroup = accountGroup;
     }
 
-    public List<AccountMemento> getMementos() { return mementos; }
+    public List<AccountMemento> getMementos() {
+        return mementos;
+    }
 
-    public void addMementos(AccountMemento memento) { mementos.add(memento); }
+    public void addMementos(AccountMemento memento) {
+        mementos.add(memento);
+    }
 
-    public void restoreFromMemento(AccountMemento memento) { this.balance = memento.getBalance(); }
+    public void restoreFromMemento(AccountMemento memento) {
+        this.balance = memento.getBalance();
+    }
 
-    protected Account() {}
+    protected Account() {
+    }
+
     //Tydzień 1, Wzorzec Builder 2, baza do tworzenia kont użytkownika
     protected Account(Builder<?> builder) {
         this.balance = builder.balance;

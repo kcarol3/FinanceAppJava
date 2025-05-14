@@ -6,7 +6,9 @@ import com.example.FinanceApp.entity.base.Account;
 public class AccountGroupDTO {
     Long accountGroup;
     Long account;
-    public AccountGroupDTO(){}
+
+    public AccountGroupDTO() {
+    }
 
     public AccountGroupDTO(Long accountGroup, Long account) {
         this.accountGroup = accountGroup;

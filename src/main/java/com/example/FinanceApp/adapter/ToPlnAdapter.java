@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 // Tydzien 2, Wzorzec Adapter 1, przeliczanie waluty transakcji z różnych typów walut na jeden domyślny dla konta
 @Service
 public class ToPlnAdapter implements CurrencyConverter {
-    private ExchangeRateService exchangeRateService;
+    private final ExchangeRateService exchangeRateService;
 
     public ToPlnAdapter(ExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;

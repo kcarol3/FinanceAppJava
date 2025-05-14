@@ -32,8 +32,7 @@ public class TransactionController {
 
     //Tydzień 8, obsługa wyjątku 1
     @PostMapping
-    public ResponseEntity<String> createTransaction(
-            @RequestBody TransactionDTO requestDto) {
+    public ResponseEntity<String> createTransaction(@RequestBody TransactionDTO requestDto) {
 
         try {
             limitingTransactionServiceProxy.createAndSaveTransaction(requestDto.getType(), requestDto);

@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class JsonParser extends Parser {
     private final ObjectMapper objectMapper;
+
     public JsonParser(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
@@ -22,6 +23,7 @@ public class JsonParser extends Parser {
 
     @Override
     public List<TransactionDTO> parse(InputStream inputStream) throws Exception {
-        return objectMapper.readValue(inputStream, new TypeReference<List<TransactionDTO>>() {});
+        return objectMapper.readValue(inputStream, new TypeReference<List<TransactionDTO>>() {
+        });
     }
 }

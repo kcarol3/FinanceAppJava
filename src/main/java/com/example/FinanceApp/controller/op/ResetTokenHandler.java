@@ -9,12 +9,12 @@ import java.util.Map;
 
 @Component("RESET")
 public class ResetTokenHandler implements TokenHandler {
-
+    private final int RESET_TOKEN_LENGTH = 8;
     private final Map<String, String> resetTokens = new HashMap<>();
 
     @Override
     public String generate(String userId) {
-        String token = new GenerateTokenInvoker(new GenerateResetTokenCommand(16)).execute();
+        String token = new GenerateTokenInvoker(new GenerateResetTokenCommand(RESET_TOKEN_LENGTH)).execute();
         resetTokens.put(userId, token);
         return token;
     }
