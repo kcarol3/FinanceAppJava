@@ -5,6 +5,8 @@ import com.example.FinanceApp.repository.AccountRepository;
 import com.example.FinanceApp.service.base.ReportServiceInterface;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class ReportService implements ReportServiceInterface {
     private final AccountRepository accountRepository;
@@ -13,7 +15,7 @@ public class ReportService implements ReportServiceInterface {
         this.accountRepository = accountRepository;
     }
 
-    public String generateReport(Long id, String format, String reportType) {
+    public String generateReport(Long id, String format, String reportType) throws IOException {
         if (accountRepository.findById(id) == null) {
             return "Konto o numerze " + id + " nie istnieje.";
         }
