@@ -5,6 +5,7 @@ import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.iterator.ExpenseTransactionIterator;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 //Tydzien 4, Wzorzec Interpreter 2, regula do obliczenia sumy wydatkow
 public class ExpenseTransactionExpression implements ExpenseExpression {
@@ -20,10 +21,21 @@ public class ExpenseTransactionExpression implements ExpenseExpression {
 
         double totalExpenses = 0.0;
 
+        //Tydzień 9, interfejs Predicate 1
+        Predicate<ExpenseTransaction> isLargeExpense = t -> t.getAmount() > 100.0;
+
         while (iterator.hasNext()) {
             ExpenseTransaction transaction = (ExpenseTransaction) iterator.next();
-            totalExpenses += transaction.getAmount();
+            if (isLargeExpense.test(transaction)) {
+                totalExpenses += transaction.getAmount();
+            }
         }
+        //Koniec, Tydzień 9, interfejs Predicate 1
+
+//        while (iterator.hasNext()) {
+//            ExpenseTransaction transaction = (ExpenseTransaction) iterator.next();
+//            totalExpenses += transaction.getAmount();
+//        }
 
         return totalExpenses;
     }
