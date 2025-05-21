@@ -38,12 +38,14 @@ public class AccountFactory {
 //    }
 //
 //    public Account createAccount(String type) {
+//  //Tydzień 9, stream processing 4
 //        return creators.stream()
 //                .filter(c -> c.supports(type))
 //                .findFirst()
 //                .orElseThrow(() -> new IllegalArgumentException("Unknown type: " + type))
 //                .create();
 //    }
+//  //Koniec, Tydzień 9, stream processing 4
 
     //sterowanie danymi
     private final Map<String, Supplier<Account>> accountStrategies = Map.of(

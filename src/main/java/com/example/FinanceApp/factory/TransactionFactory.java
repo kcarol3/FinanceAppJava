@@ -56,7 +56,7 @@ public class TransactionFactory {
 //        this.accountService = accountService;
 //        this.creators = creators;
 //    }
-//
+//  //Tydzień 9, stream processing 2
 //    public Transaction createTransaction(String type, TransactionDTO dto) {
 //        return creators.stream()
 //                .filter(c -> c.supports(type))
@@ -64,6 +64,7 @@ public class TransactionFactory {
 //                .orElseThrow(() -> new IllegalArgumentException("Unknown transaction type: " + type))
 //                .create(dto);
 //    }
+//  //Koniec, Tydzień 9, stream processing
 
     // sterowanie danymi
     private final Map<String, BiFunction<TransactionDTO, Account, Transaction>> transactionStrategies;

@@ -23,12 +23,13 @@ public class RecommendationService implements RecommendationGeneratorServiceInte
 
     @Override
     public List<Recommendation> generateAndSaveAll(User user) {
+        //Tydzień 9, stream processing 6
         List<Recommendation> results = engines.stream()
                 .map(engine -> engine.generateRecommendation(user))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();
-
+        //Koniec, Tydzień 9, stream processing 6
         return recommendationRepository.saveAll(results);
     }
 }

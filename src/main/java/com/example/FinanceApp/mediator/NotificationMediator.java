@@ -13,14 +13,14 @@ public class NotificationMediator implements NotificationMediatorInterface {
     public NotificationMediator() {
         this.applicationRegister = new ArrayList<>();
     }
-
+//Tydzień 9, stream processing 1
     @Override
     public void sendNotification(Application application, String message) {
         applicationRegister.stream()
                 .filter(app -> app != application)
                 .forEach(app -> app.notifyUser(message));
     }
-
+//Koniec, Tydzień 9, stream processing 1
     public void add(Application application) {
         applicationRegister.add(application);
     }

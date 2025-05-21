@@ -21,9 +21,11 @@ public class SavingGoalResponseDTO {
         this.targetAmount = savingGoal.getTargetAmount();
         this.savedAmount = savingGoal.getSavedAmount();
         this.parentId = (savingGoal.getParent() != null) ? savingGoal.getParent().getId() : null;
+        //Tydzień 9, stream processing 3
         this.subGoals = savingGoal.getSubGoals().stream()
                 .map(SavingGoalResponseDTO::new)
                 .collect(Collectors.toList());
+        //Koniec, Tydzień 9, stream processing 3
     }
 
     public Long getId() {

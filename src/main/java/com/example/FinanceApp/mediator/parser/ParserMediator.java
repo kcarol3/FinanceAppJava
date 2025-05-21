@@ -46,12 +46,12 @@ public class ParserMediator implements ParserMediatorInterface {
 
     private List<TransactionDTO> parseTransaction(MultipartFile file) throws Exception {
         String contentType = file.getContentType();
-
+//Tydzień 9, stream processing 5
         Parser parser = parsers.stream()
                 .filter(p -> p.supports(contentType))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Nieobsługiwany format pliku: " + contentType));
-
+//Koniec, Tydzień 9, stream processing 5
         return parser.parse(file.getInputStream());
     }
 }
