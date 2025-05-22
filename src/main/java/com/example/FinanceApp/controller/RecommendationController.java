@@ -2,7 +2,7 @@ package com.example.FinanceApp.controller;
 
 import com.example.FinanceApp.entity.Recommendation;
 import com.example.FinanceApp.entity.base.User;
-import com.example.FinanceApp.service.UserService;
+import com.example.FinanceApp.service.user.UserService;
 import com.example.FinanceApp.service.base.RecommendationService.RecommendationGeneratorServiceInterface;
 import com.example.FinanceApp.service.base.RecommendationService.RecommendationQueryServiceInterface;
 import org.springframework.http.ResponseEntity;

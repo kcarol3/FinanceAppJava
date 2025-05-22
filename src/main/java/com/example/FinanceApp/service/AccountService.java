@@ -2,6 +2,8 @@ package com.example.FinanceApp.service;
 
 import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.factory.AccountFactory;
+import com.example.FinanceApp.functionalInterfaces.MoneyTransferOperation;
+import com.example.FinanceApp.functionalInterfaces.SufficientFundsValidator;
 import com.example.FinanceApp.memento.AccountMemento;
 import com.example.FinanceApp.observer.alert.Observer;
 import com.example.FinanceApp.observer.alert.Subject;
@@ -55,6 +57,7 @@ public class AccountService implements AccountServiceInterface, Subject {
         return accountRepository.save(account);
     }
 
+    // tydzien 9, interfejsy funkcyjne 5 i 6
     @Override
     @Transactional
     public void transferMoney(Long fromId, Long toId, Double amount) {
@@ -63,12 +66,19 @@ public class AccountService implements AccountServiceInterface, Subject {
         Account toAccount = accountRepository.findById(toId)
                 .orElseThrow(() -> new RuntimeException("Konto docelowe nie znalezione"));
 
-        if (fromAccount.getBalance().compareTo(amount) < 0) {
-            throw new RuntimeException("Niewystarczające środki");
-        }
+        SufficientFundsValidator validator = (account, amt) -> {
+            if (account.getBalance().compareTo(amt) < 0) {
+                throw new RuntimeException("Niewystarczające środki na koncie ID " + account.getId());
+            }
+        };
 
-        fromAccount.withdraw(amount);
-        toAccount.deposit(amount);
+        MoneyTransferOperation transfer = (from, to, amt) -> {
+            from.withdraw(amt);
+            to.deposit(amt);
+        };
+
+        validator.validate(fromAccount, amount);
+        transfer.execute(fromAccount, toAccount, amount);
 
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
@@ -76,6 +86,7 @@ public class AccountService implements AccountServiceInterface, Subject {
         notifyObservers(fromAccount, -amount, "Przelew wychodzący do konta ID " + toId);
         notifyObservers(toAccount, amount, "Przelew przychodzący od konta ID " + fromId);
     }
+    // tydzien 9, interfejsy funkcyjne 5 i 6, koniec
 
     @Override
     public AccountMemento createAndSaveAccountMemento(Account account) {

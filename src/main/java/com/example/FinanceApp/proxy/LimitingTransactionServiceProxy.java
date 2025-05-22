@@ -7,7 +7,7 @@ import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.interpreter.ExpenseExpression;
 import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
 import com.example.FinanceApp.repository.TransactionRepository;
-import com.example.FinanceApp.service.TransactionService;
+import com.example.FinanceApp.service.transaction.TransactionService;
 import com.example.FinanceApp.service.base.TransactionServiceInterface;
 import org.springframework.stereotype.Service;
 
