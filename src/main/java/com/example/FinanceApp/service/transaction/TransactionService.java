@@ -1,4 +1,4 @@
-package com.example.FinanceApp.service;
+package com.example.FinanceApp.service.transaction;
 
 import com.example.FinanceApp.adapter.DateFormatTimeOptionalAdapter;
 import com.example.FinanceApp.adapter.ToPlnAdapter;
@@ -9,6 +9,10 @@ import com.example.FinanceApp.entity.RecurringTransaction;
 import com.example.FinanceApp.entity.base.Account;
 import com.example.FinanceApp.entity.base.Transaction;
 import com.example.FinanceApp.factory.TransactionFactory;
+import com.example.FinanceApp.functionalInterfaces.NextDateCalculator;
+import com.example.FinanceApp.functionalInterfaces.TransactionCloner;
+import com.example.FinanceApp.functionalInterfaces.TransactionTypeCondition;
+import com.example.FinanceApp.functionalInterfaces.TransactionValidationRule;
 import com.example.FinanceApp.interpreter.BalanceExpression;
 import com.example.FinanceApp.interpreter.ExpenseExpression;
 import com.example.FinanceApp.interpreter.ExpenseTransactionExpression;
@@ -23,11 +27,13 @@ import com.example.FinanceApp.strategy.taxStrategy.TaxService;
 import org.springframework.context.ApplicationEventPublisher;
 import com.example.FinanceApp.state.TransactionContext;
 import com.example.FinanceApp.state.TransactionStateType;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionService implements TransactionCreationServiceInterface, TransactionAnalysisServiceInterface, RecurringTransactionServiceInterface {
@@ -71,29 +77,53 @@ public class TransactionService implements TransactionCreationServiceInterface, 
         return expenseExpression.expenseExpressionInterpret(transactions);
     }
 
+    // tydzien 9, interfejsy funkcyjne 3 i 4
     @Override
     public Transaction createRecurringTransaction(Long transactionId, String frequency) {
         Transaction transaction = transactionRepository.findById(transactionId)
-                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+                .orElseThrow(() -> new RuntimeException("Transaction with ID " + transactionId + " not found"));
+
+        // Lambda: klonowanie transakcji
+        TransactionCloner cloner = Transaction::clone;
+
+        // Lambda: mapa częstotliwości → data następnej transakcji
+        Map<String, NextDateCalculator> frequencyCalculators = Map.of(
+                "DAILY", current -> current.plusDays(1),
+                "WEEKLY", current -> current.plusWeeks(1),
+                "MONTHLY", current -> current.plusMonths(1),
+                "YEARLY", current -> current.plusYears(1)
+        );
+
+        NextDateCalculator calculator = frequencyCalculators.getOrDefault(
+                frequency.toUpperCase(),
+                current -> current.plusDays(3)
+        );
 
         RecurringTransaction recurringTransaction = new RecurringTransaction(
-                transaction.clone(),
-                LocalDate.now().plusDays(DAYS_TO_ADD),
+                cloner.clone(transaction),
+                calculator.calculateNextDate(LocalDate.now()),
                 frequency
         );
 
         return transactionRepository.save(recurringTransaction);
     }
+    // tydzien 9, interfejsy funkcyjne 3 i 4, koniec
 
+    //tydzien 9, interfejsy funkcyjne, 1 i 2
     private void extracted(String type, Transaction transaction) {
-        if ("EXPENSE".equalsIgnoreCase(type)) {
-            BalanceExpression minBalanceRule = new MinimumBalanceExpression(MIN_BALANCE);
+        TransactionValidationRule minBalanceRule = t ->
+                t.getAccount().getBalance() - t.getAmount() >= MIN_BALANCE;
 
-            if (!minBalanceRule.balanceExpressionInterpret(transaction)) {
+        TransactionTypeCondition isExpense = transactionType -> "EXPENSE".equalsIgnoreCase(transactionType);
+
+
+        if (isExpense.isType(type)) {
+            if (!minBalanceRule.validate(transaction)) {
                 throw new TransactionValidationException("Expense transaction failed validation: Insufficient balance.");
             }
         }
     }
+    //tydzien 9, interfejsy funkcyjne, 1 i 2, koniec
 
     private void processTransaction(String type, Transaction transaction) {
         if ("INCOME".equalsIgnoreCase(type)) {

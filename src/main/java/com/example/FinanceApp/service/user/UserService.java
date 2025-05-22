@@ -1,4 +1,4 @@
-package com.example.FinanceApp.service;
+package com.example.FinanceApp.service.user;
 
 import com.example.FinanceApp.dto.UserDTO;
 import com.example.FinanceApp.repository.UserRepository;

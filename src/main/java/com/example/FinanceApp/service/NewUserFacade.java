@@ -7,9 +7,8 @@ import com.example.FinanceApp.repository.AccountRepository;
 import com.example.FinanceApp.repository.UserRepository;
 import com.example.FinanceApp.service.base.LoggerFacadeInterface;
 import com.example.FinanceApp.service.base.NewUserFacadeInterface;
+import com.example.FinanceApp.service.user.UserService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 //Tydzień 3, Wzorzec Facade 2, łączenie tworzenia konta, usera i logowania w jeden interfejs
 // Tydzien 6, SRP 6
