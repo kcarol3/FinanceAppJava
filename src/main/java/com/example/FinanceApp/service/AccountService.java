@@ -10,6 +10,7 @@ import com.example.FinanceApp.observer.alert.Subject;
 import com.example.FinanceApp.repository.AccountMementoRepository;
 import com.example.FinanceApp.repository.AccountRepository;
 import com.example.FinanceApp.service.base.AccountServiceInterface;
+import jakarta.persistence.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,5 +115,4 @@ public class AccountService implements AccountServiceInterface, Subject {
     public AccountMemento findFirstByAccountIdOrderByIdDesc(Long accountId) {
         return accountMementoRepository.findTopByAccountIdOrderByIdDesc(accountId);
     }
-
 }

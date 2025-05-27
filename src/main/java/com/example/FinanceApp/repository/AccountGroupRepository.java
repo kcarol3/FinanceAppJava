@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountGroupRepository extends JpaRepository<AccountGroup, Long> {
+    boolean existsAccountGroupByName(String name);
 }
