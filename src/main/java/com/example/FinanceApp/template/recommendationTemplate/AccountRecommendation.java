@@ -11,12 +11,12 @@ public class AccountRecommendation extends RecommendationEngine {
     private static final Integer MIN_ACCOUNT_NUMBER = 2;
 
     @Override
-    protected boolean isRelevant(User user) {
+    public boolean isRelevant(User user) {
         return user.getAccounts().stream().count() < MIN_ACCOUNT_NUMBER;
     }
 
     @Override
-    protected Recommendation buildRecommendation(User user) {
+    public Recommendation buildRecommendation(User user) {
         String msg = "Posiadasz tylko jedno konto. Może chciałbyś założyć nowe?";
 
         Recommendation newRec = new Recommendation();
