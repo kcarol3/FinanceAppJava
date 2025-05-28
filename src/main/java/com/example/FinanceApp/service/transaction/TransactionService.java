@@ -83,10 +83,8 @@ public class TransactionService implements TransactionCreationServiceInterface, 
         Transaction transaction = transactionRepository.findById(transactionId)
                 .orElseThrow(() -> new RuntimeException("Transaction with ID " + transactionId + " not found"));
 
-        // Lambda: klonowanie transakcji
         TransactionCloner cloner = Transaction::clone;
 
-        // Lambda: mapa częstotliwości → data następnej transakcji
         Map<String, NextDateCalculator> frequencyCalculators = Map.of(
                 "DAILY", current -> current.plusDays(1),
                 "WEEKLY", current -> current.plusWeeks(1),
@@ -144,7 +142,7 @@ public class TransactionService implements TransactionCreationServiceInterface, 
         transactionRepository.save(context.getTransaction());
     }
 
-    private void handleTransactionFailure(Transaction transaction) {
+    public void handleTransactionFailure(Transaction transaction) {
         if (transaction != null) {
             TransactionContext context = new TransactionContext(transaction);
             context.cancel();
