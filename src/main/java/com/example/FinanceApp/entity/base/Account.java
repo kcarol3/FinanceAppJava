@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,7 +48,7 @@ public abstract class Account implements AccountGroupInterface {
     private AccountGroup accountGroup;
 
     @OneToMany(mappedBy = "account")
-    private List<AccountMemento> mementos;
+    private List<AccountMemento> mementos = new ArrayList<>();
 
     public void deposit(Double amount) {
         this.balance += amount;
@@ -110,6 +111,9 @@ public abstract class Account implements AccountGroupInterface {
     }
 
     public void addMementos(AccountMemento memento) {
+        if (mementos == null) {
+            mementos = new ArrayList<>();
+        }
         mementos.add(memento);
     }
 
@@ -123,6 +127,7 @@ public abstract class Account implements AccountGroupInterface {
     //Tydzień 1, Wzorzec Builder 2, baza do tworzenia kont użytkownika
     protected Account(Builder<?> builder) {
         this.balance = builder.balance;
+        this.mementos = new ArrayList<>();
     }
 
     public abstract static class Builder<T extends Builder<T>> {
